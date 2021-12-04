@@ -1,5 +1,5 @@
 import { Buttons, Progress, Tooltip } from "antd";
-import {CloseCircleFilled} from '@ant-design/icons'
+import { CloseCircleFilled } from "@ant-design/icons";
 
 const AddLessonForm = ({
   values,
@@ -9,7 +9,7 @@ const AddLessonForm = ({
   uploadButtonText,
   handleVideo,
   progress,
-  handleVideoRemove
+  handleVideoRemove,
 }) => {
   return (
     <div className="container pt-3">
@@ -41,7 +41,7 @@ const AddLessonForm = ({
           {!uploading && values.video.location && (
             <Tooltip title="Remove">
               <span onClick={handleVideoRemove} className="pt-1 pl-3">
-                <CloseCircleFilled className="pt-4 text-danger d-flex justify-content-center pointer"
+                <CloseCircleFilled className="pt-4 text-danger d-flex justify-content-center pointer" />
               </span>
             </Tooltip>
           )}
