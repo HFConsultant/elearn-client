@@ -1,4 +1,4 @@
-import { useRputer } from "next/router";
+import { useRouter } from "next/router";
 import { useState, useEffect, createElement } from "react";
 import axios from "axios";
 import StudentRoute from "../../../components/routes/StudentRoute";
