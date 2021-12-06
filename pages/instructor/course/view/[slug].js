@@ -78,7 +78,7 @@ const CourseView = () => {
 
   const handleVideo = async (e) => {
     try {
-      const filename = e.target.files[0];
+      const file = e.target.files[0];
       setUploadButtonText(file.name);
       setUploading(true);
 

@@ -23,8 +23,7 @@ const InstructorIndex = () => {
     <InstructorRoute>
       <h1 className="p-4 text-center jumbotron mp-4">Instructor Dashboard</h1>
       {/* <pre>{JSON.stringify(courses, null, 4)}</pre> */}
-
-      {courses.length &&
+      {courses &&
         courses.map((course) => (
           <>
             <div className="pt-2 media">

@@ -32,15 +32,15 @@ const register = () => {
         email,
         password,
       });
-      //console.log("REGISTER RESPONSE", data);
+      router.push("/login");
+      console.log("REGISTER RESPONSE", data);
       toast(`Thank you for registering ${user.name}! Please login`);
       setName("");
       setEmail("");
       setPassword("");
       setLoading(false);
-      router.push("/login");
     } catch (err) {
-      toast.error(err.response);
+      toast("Registration failed. Please try again", err);
       setLoading(false);
     }
   };

@@ -1,4 +1,4 @@
-import { Buttons, Progress, Tooltip } from "antd";
+import { Button, Progress, Tooltip } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 
 const AddLessonForm = ({
@@ -20,7 +20,7 @@ const AddLessonForm = ({
           onChange={(e) => setValues({ ...values, title: e.target.value })}
           value={values.title}
           placeholder="Title"
-          autofocus
+          autoFocus
           required
         />
         <textarea
