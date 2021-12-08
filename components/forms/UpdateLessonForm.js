@@ -31,7 +31,7 @@ const UpdateLessonForm = ({
         ></textarea>
 
         <div>
-          {!uploading && current.video && current.video.location && (
+          {!uploading && current.video && current.video.Location && (
             <div className="pt-2 d-flex justify-content-center">
               <ReactPlayer
                 url={current.video.Location}

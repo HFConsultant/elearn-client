@@ -29,7 +29,7 @@ const InstructorIndex = () => {
             <div className="pt-2 media">
               <Avatar
                 size={80}
-                src={course.image ? course.image.location : "/course.png"}
+                src={course.image ? course.image.Location : "/course.png"}
               />
 
               <div className="pl-2 media-body">

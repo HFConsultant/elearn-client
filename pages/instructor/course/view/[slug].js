@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import InstructorRoute from "../../../../components/routes/InstructorRoute";
 import axios from "axios";
@@ -33,6 +33,7 @@ const CourseView = () => {
 
   const router = useRouter();
   const { slug } = router.query;
+  //console.log("SLUG ==>", slug);
 
   useEffect(() => {
     loadCourse();
@@ -58,7 +59,7 @@ const CourseView = () => {
   // Functions for AddLesson
   const handleAddLesson = async (e) => {
     e.preventDefault();
-    //console.log(values);
+    console.log(slug, values);
     try {
       const { data } = await axios.post(
         `/api/course/lesson/${slug}/${course.instructor._id}`,
@@ -188,8 +189,8 @@ const CourseView = () => {
                       />
                     </Tooltip>
 
-                    {course.lessons && course.lessons.length < 5 ? (
-                      <Tooltip title="Min of 5 lessons required to publish">
+                    {course.lessons && course.lessons.length > 1 ? (
+                      <Tooltip title="Min of 1 lesson required to publish">
                         <QuestionOutlined className="h5 pointer text-danger" />
                       </Tooltip>
                     ) : course.published ? (

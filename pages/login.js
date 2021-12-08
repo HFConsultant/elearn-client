@@ -41,14 +41,15 @@ const login = () => {
       // save in local storage
       window.localStorage.setItem("user", JSON.stringify(data));
       // redirect
-      toast(`Welcome ${user.name}!`);
+      router.push("/");
+      toast(`Welcome!`);
       setEmail("");
       setPassword("");
-      router.push("/");
 
       //  setLoading(false);
     } catch (err) {
-      toast.error(err.response);
+      console.log("Login Error", err);
+      toast("Login failed");
       setLoading(false);
     }
   };
