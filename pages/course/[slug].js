@@ -10,7 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const SingleCourse = ({ course }) => {
   // state
-  const [showModal, setModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [enrolled, setEnrolled] = useState({});

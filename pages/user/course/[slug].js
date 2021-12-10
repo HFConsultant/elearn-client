@@ -99,7 +99,7 @@ const SingleCourse = () => {
                 icon={<Avatar>{index + 1}</Avatar>}
               >
                 {lesson.title.substring(0, 30)}{" "}
-                {completedLessons.includes(lesson._id) ? (
+                {completedLessons.includes(lessons._id) ? (
                   <CheckCircleFilled
                     className="float-right ml-2 text-primary"
                     style={{ marginTop: "13px" }}

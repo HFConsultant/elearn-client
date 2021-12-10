@@ -34,13 +34,13 @@ const register = () => {
       });
       router.push("/login");
       console.log("REGISTER RESPONSE", data);
-      toast(`Thank you for registering ${user.name}! Please login`);
+      toast(`Thank you for registering ${user}! Please login`);
       setName("");
       setEmail("");
       setPassword("");
       setLoading(false);
     } catch (err) {
-      toast("Registration failed. Please try again", err);
+      console.log(err);
       setLoading(false);
     }
   };

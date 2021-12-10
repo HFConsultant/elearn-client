@@ -47,7 +47,7 @@ const SingleCourseJumbotron = ({
             className="pb-4 mr-2"
           />
           {/* {author} */}
-          <p>Created by {instructor.name}</p>
+          <p>Created by {instructor}</p>
           {/* {updatedAt} */}
           <p>Last uupdated {new Date(updatedAt).toLocaleDateString()}</p>
           {/* {price} */}
@@ -66,7 +66,7 @@ const SingleCourseJumbotron = ({
             <div
               onClick={() => {
                 setPreview(lessons[0].video.Location);
-                setModal(!showModal);
+                setShowModal(!showModal);
               }}
             >
               <ReactPlayer

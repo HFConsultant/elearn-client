@@ -147,7 +147,7 @@ const CourseEdit = () => {
     // remove existing video, if any
     if (current.video && current.video.Location) {
       const res = await axios.post(
-        `/api/course/video-remove/${values.instructor._id}`,
+        `/api/course/video-remove/${values.instructor}`,
         current.video
       );
       console.log("REMOVED ==> ", res);
@@ -160,7 +160,7 @@ const CourseEdit = () => {
     videoData.append("video", file);
     videoData.append("courseId", values._id);
     const { data } = await axios.post(
-      `/api/course/video-upload/${values.instructor._id}`,
+      `/api/course/video-upload/${values.instructor}`,
       videoData,
       {
         onUploadProgress: (e) =>
