@@ -148,7 +148,7 @@ const SingleCourse = () => {
                   </>
                 )}
               <ReactMarkdown
-                source={course.lessons[clicked].content}
+                children={course.lessons[clicked].content}
                 className="single-post"
               />
             </>

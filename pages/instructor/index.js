@@ -26,7 +26,7 @@ const InstructorIndex = () => {
       {courses &&
         courses.map((course) => (
           <>
-            <div className="pt-2 media">
+            <div key={course._id} className="pt-2 media">
               <Avatar
                 size={80}
                 src={course.image ? course.image.Location : "/course.png"}

@@ -59,12 +59,13 @@ const CourseView = () => {
   // Functions for AddLesson
   const handleAddLesson = async (e) => {
     e.preventDefault();
-    console.log(slug, values);
+    console.log(values);
     try {
       const { data } = await axios.post(
-        `/api/course/lesson/${slug}/${course.instructor._id}`,
+        `/api/course/lesson/${slug}/${course._id}`,
         values
       );
+      console.log("ADD LESSON DATA ==>", data);
       setValues({ ...values, title: "", content: "", video: {} });
       setProgress(0);
       setUploadButtonText("Upload video");
@@ -87,7 +88,7 @@ const CourseView = () => {
       videoData.append("video", file);
       // save progress bar and send video as form data to backend
       const { data } = await axios.post(
-        `/api/course/video-upload/${course.instructor._id}`,
+        `/api/course/video-upload/${course._id}`,
         videoData,
         {
           onUploadProgress: (e) => {
@@ -110,7 +111,7 @@ const CourseView = () => {
     try {
       setUploading(true);
       const { data } = await axios.post(
-        `/api/course/video-remove/${course.instructor._id}`,
+        `/api/course/video-remove/${course._id}`,
         values.video
       );
       console.log(data);
@@ -215,7 +216,7 @@ const CourseView = () => {
             <hr />
             <div className="row">
               <div className="col">
-                <ReactMarkdown source={course.description} />
+                <ReactMarkdown children={course.description} />
               </div>
             </div>
             <div className="row">
