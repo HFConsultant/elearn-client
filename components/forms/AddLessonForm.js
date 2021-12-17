@@ -1,5 +1,5 @@
 import { Button, Progress, Tooltip } from "antd";
-import { CloseCircleFilled } from "@ant-design/icons";
+import { CloseCircleFilled, CloseCircleOutlined } from "@ant-design/icons";
 
 const AddLessonForm = ({
   values,

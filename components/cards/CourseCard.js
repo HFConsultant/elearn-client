@@ -6,6 +6,9 @@ const { Meta } = Card;
 
 const CourseCard = ({ course }) => {
   const { name, instructor, price, image, slug, paid, category } = course;
+
+  console.log("CourseCard", course);
+
   return (
     <Link href={`/course/${slug}`}>
       <a>
@@ -13,7 +16,7 @@ const CourseCard = ({ course }) => {
           className="mb-4"
           cover={
             <img
-              src={image.Location}
+              src={image?.Location}
               alt={name}
               style={{ height: "200px", objectFit: "cover" }}
               className="p-1"

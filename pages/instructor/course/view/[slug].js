@@ -33,7 +33,6 @@ const CourseView = () => {
 
   const router = useRouter();
   const { slug } = router.query;
-  //console.log("SLUG ==>", slug);
 
   useEffect(() => {
     loadCourse();
@@ -44,25 +43,27 @@ const CourseView = () => {
   }, [course]);
 
   const loadCourse = async () => {
+    console.log("loadCourse");
     const { data } = await axios.get(`/api/course/${slug}`);
-    setCourse(data);
+    setCourse(data[0]);
+    console.log("course loaded with =>", data[0]);
   };
 
   const studentCount = async () => {
     const { data } = await axios.post(`/api/instructor/student-count`, {
       courseId: course._id,
     });
-    console.log("STUDENT COUNT => ", data);
+    //console.log("STUDENT COUNT => ", data);
     setStudents(data.length);
   };
 
   // Functions for AddLesson
   const handleAddLesson = async (e) => {
     e.preventDefault();
-    console.log(values);
+    console.log("handleAddLesson triggered");
     try {
       const { data } = await axios.post(
-        `/api/course/lesson/${slug}/${course.instructor}`,
+        `/api/course/lesson/${slug}/${course.instructor._id}`,
         values
       );
       console.log("ADD LESSON DATA ==>", data);
@@ -79,16 +80,18 @@ const CourseView = () => {
   };
 
   const handleVideo = async (e) => {
+    console.log("handleVideo Event:", e.target);
     try {
       const file = e.target.files[0];
       setUploadButtonText(file.name);
       setUploading(true);
+      console.log("FILE =>", file);
 
       const videoData = new FormData();
       videoData.append("video", file);
       // save progress bar and send video as form data to backend
       const { data } = await axios.post(
-        `/api/course/video-upload/${course.instructor}`,
+        `/api/course/upload-video/${course.instructor._id}`,
         videoData,
         {
           onUploadProgress: (e) => {
@@ -97,7 +100,7 @@ const CourseView = () => {
         }
       );
       // once response is received
-      console.log(data);
+      console.log("handleVideo data =>", data);
       setValues({ ...values, video: data });
       setUploading(false);
     } catch (err) {
@@ -111,7 +114,7 @@ const CourseView = () => {
     try {
       setUploading(true);
       const { data } = await axios.post(
-        `/api/course/video-remove/${course.instructor}`,
+        `/api/course/remove-video/${course.instructor._id}`,
         values.video
       );
       console.log(data);
@@ -219,12 +222,12 @@ const CourseView = () => {
                 <ReactMarkdown children={course.description} />
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <Button
                 onClick={() => setVisible(true)}
                 className="text-center col-md-6 offset-md-3"
                 type="primary"
-                shape="rounded"
+                shape="round"
                 icon={<UploadOutlined />}
                 size="large"
               >
@@ -241,17 +244,8 @@ const CourseView = () => {
               onCancel={() => setVisible(false)}
               footer={null}
             >
-              <AddLessonForm
-                values={values}
-                setValues={setValues}
-                handleAddLesson={handleAddLesson}
-                uploading={uploading}
-                uploadButtonText={uploadButtonText}
-                handleVideo={handleVideo}
-                progress={progress}
-                handleVideoRemove={handleVideoRemove}
-              />
-            </Modal>
+            { AddLessonForm goes here}
+            </Modal> */}
             <div className="pb-5 row">
               <div className="col lesson-list">
                 <h4>
@@ -271,6 +265,17 @@ const CourseView = () => {
                 ></List>
               </div>
             </div>
+            <h1 className="text-center">Add Lesson</h1>
+            <AddLessonForm
+              values={values}
+              setValues={setValues}
+              handleAddLesson={handleAddLesson}
+              uploading={uploading}
+              uploadButtonText={uploadButtonText}
+              handleVideo={handleVideo}
+              progress={progress}
+              handleVideoRemove={handleVideoRemove}
+            />
           </div>
         )}
       </div>

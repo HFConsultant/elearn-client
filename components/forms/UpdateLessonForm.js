@@ -1,5 +1,5 @@
 import { Buttons, Progress, Switch } from "antd";
-import { CloseCircleFilled } from "@ant-design/icons";
+import { CloseCircleFilled, CloseCircleOutlined } from "@ant-design/icons";
 import ReactPlayer from "react-player";
 
 const UpdateLessonForm = ({
@@ -13,7 +13,7 @@ const UpdateLessonForm = ({
 }) => {
   return (
     <div className="container pt-3">
-      {JSON.stringify(current)}
+      {/* {JSON.stringify(current)} */}
       <form onSubmit={handleUpdateLesson}>
         <input
           type="text"

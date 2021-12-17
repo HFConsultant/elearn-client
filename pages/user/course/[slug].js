@@ -37,7 +37,7 @@ const SingleCourse = () => {
 
   const loadCourse = async () => {
     const { data } = await axios.get(`/api/user/course/${slug}`);
-    setCourse(data);
+    setCourse(data[0]);
   };
 
   const loadCompletedLessons = async () => {
@@ -148,7 +148,7 @@ const SingleCourse = () => {
                   </>
                 )}
               <ReactMarkdown
-                children={course.lessons[clicked].content}
+                source={course.lessons[clicked].content}
                 className="single-post"
               />
             </>

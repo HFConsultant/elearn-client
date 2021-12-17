@@ -1,5 +1,5 @@
 .jumbotron {
-  background-image: linear-gradient(to left, rgb(18, 18, 19), #e4e6ebf1);
+  background-image: linear-gradient(rgb(18, 18, 19), #e4e6ebf1, rgb(18, 18, 19));
   color: #fff;
 }
 
@@ -13,8 +13,15 @@
 
 h1 {
   text-shadow: 2px 2px 5px black;
+  /* -webkit-text-stroke: 1px black;
+  -webkit-text-fill-color: white; */
 }
 
 div {
   box-shadow: 4px 4px 8px ;
+  backdrop-filter: blur(10px);
+}
+
+.content {
+  backdrop-filter: blur(10px);
 }

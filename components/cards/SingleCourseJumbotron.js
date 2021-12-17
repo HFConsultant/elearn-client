@@ -2,7 +2,7 @@ import SingleCourse from "../../pages/course/[slug]";
 import { currencyFormatter } from "../../utils/helpers";
 import { Badge, Modal, Button } from "antd";
 import ReactPlayer from "react-player";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
 
 const SingleCourseJumbotron = ({
   course,
@@ -30,6 +30,8 @@ const SingleCourseJumbotron = ({
     category,
   } = course;
 
+  console.log("COURSE =>", course);
+
   return (
     <div className="jumbotron bg-primary square">
       <div className="row">
@@ -47,9 +49,9 @@ const SingleCourseJumbotron = ({
             className="pb-4 mr-2"
           />
           {/* {author} */}
-          <p>Created by {instructor}</p>
+          <p>Created by {instructor.name}</p>
           {/* {updatedAt} */}
-          <p>Last uupdated {new Date(updatedAt).toLocaleDateString()}</p>
+          <p>Last updated {new Date(updatedAt).toLocaleDateString()}</p>
           {/* {price} */}
           <h4 className="text-light">
             {paid

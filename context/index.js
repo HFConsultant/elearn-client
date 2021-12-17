@@ -54,7 +54,7 @@ const Provider = ({ children }) => {
             })
             .catch((err) => {
               console.log("AXIOS INTERCEPTORS ERR", err);
-              reject(err);
+              reject(error);
             });
         });
       }

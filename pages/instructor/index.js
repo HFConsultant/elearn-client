@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InstructorRoute from "../../components/routes/InstructorRoute";
 import { Avatar, Tooltip } from "antd";
@@ -15,6 +15,7 @@ const InstructorIndex = () => {
   const loadCourses = async () => {
     const { data } = await axios.get("/api/instructor-courses");
     setCourses(data);
+    console.log("Courses loaded =>", data);
   };
 
   const myStyle = { marginTop: "-15px", fontSize: "10px" };
@@ -25,8 +26,8 @@ const InstructorIndex = () => {
       {/* <pre>{JSON.stringify(courses, null, 4)}</pre> */}
       {courses &&
         courses.map((course) => (
-          <>
-            <div key={course._id} className="pt-2 media">
+          <React.Fragment key={course._id}>
+            <div className="pt-2 media">
               <Avatar
                 size={80}
                 src={course.image ? course.image.Location : "/course.png"}
@@ -75,7 +76,7 @@ const InstructorIndex = () => {
                 </div>
               </div>
             </div>
-          </>
+          </React.Fragment>
         ))}
     </InstructorRoute>
   );

@@ -20,6 +20,7 @@ const SingleCourse = ({ course }) => {
   } = useContext(Context);
 
   useEffect(() => {
+    console.log(course);
     if (user && course) checkEnrollment();
   }, [user, course]);
 
@@ -32,7 +33,7 @@ const SingleCourse = ({ course }) => {
   const { slug } = router.query;
 
   const handlePaidEnrollment = async () => {
-    //console.log("handlePaidEnrollment");
+    console.log("handlePaidEnrollment");
     try {
       setLoading(true);
       if (!user) router.push("/login");
@@ -48,8 +49,8 @@ const SingleCourse = ({ course }) => {
     }
   };
 
-  const handleFreeEnrollment = async () => {
-    //console.log("handleFreeEnrollment");
+  const handleFreeEnrollment = async (e) => {
+    console.log("handleFreeEnrollment");
     e.preventDefault();
     try {
       if (!user) router.push("/login");
@@ -103,9 +104,10 @@ const SingleCourse = ({ course }) => {
 
 export async function getServerSideProps({ query }) {
   const { data } = await axios.get(`${process.env.API}/course/${query.slug}`);
+
   return {
     props: {
-      course: data,
+      course: data[0],
     },
   };
 }

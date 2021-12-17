@@ -34,7 +34,7 @@ const register = () => {
       });
       router.push("/login");
       console.log("REGISTER RESPONSE", data);
-      toast(`Thank you for registering ${user}! Please login`);
+      toast(`Thank you for registering! Please login`);
       setName("");
       setEmail("");
       setPassword("");

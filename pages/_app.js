@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "../context";
 
-function MainApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
     <Provider>
       <ToastContainer position="top-center" />
@@ -16,4 +16,4 @@ function MainApp({ Component, pageProps }) {
   );
 }
 
-export default MainApp;
+export default MyApp;

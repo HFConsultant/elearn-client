@@ -43,6 +43,7 @@ const CourseEdit = () => {
 
   const loadCourse = async () => {
     const { data } = await axios.get(`/api/course/${slug}`);
+    console.log("loadCourse 'edit' =>", data);
     if (data) setValues(data);
     if (data && data.image) setImage(data.image);
   };
@@ -113,8 +114,9 @@ const CourseEdit = () => {
   const handleDrop = async (e, index) => {
     //console.log('ON DROP => ',index);
     const movingItemIndex = e.dataTransfer.getData("itemIndex");
-    const targetItemIndex = index - movingItemIndex;
-    let allLessons = value.lessons;
+    const targetItemIndex = index;
+    let allLessons = values.lessons;
+
     let movingItem = allLessons[movingItemIndex]; //clicked/dragged item to re-order
     allLessons.splice(movingItemIndex, 1); // remove 1 item from given index
     allLessons.splice(targetItemIndex, 0, movingItem); // push item after target item index
@@ -143,11 +145,11 @@ const CourseEdit = () => {
    * lesson update functions
    */
 
-  const handleVideo = async () => {
+  const handleVideo = async (e) => {
     // remove existing video, if any
     if (current.video && current.video.Location) {
       const res = await axios.post(
-        `/api/course/video-remove/${values.instructor}`,
+        `/api/course/remove-video/${values.instructor._id}`,
         current.video
       );
       console.log("REMOVED ==> ", res);
@@ -160,7 +162,7 @@ const CourseEdit = () => {
     videoData.append("video", file);
     videoData.append("courseId", values._id);
     const { data } = await axios.post(
-      `/api/course/video-upload/${values.instructor}`,
+      `/api/course/upload-video/${values.instructor._id}`,
       videoData,
       {
         onUploadProgress: (e) =>
@@ -173,7 +175,7 @@ const CourseEdit = () => {
   };
 
   const handleUpdateLesson = async (e) => {
-    //console.log("handle update lesson");
+    console.log("handleUpdateLesson => ", current);
     e.preventDefault();
     const { data } = await axios.put(
       `/api/course/lesson/${slug}/${current._id}`,
