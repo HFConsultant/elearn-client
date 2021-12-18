@@ -1,15 +1,27 @@
 /// <reference types="node" />
-import { IncomingMessage, ServerResponse, Server as HTTPServer } from 'http';
-import { UrlWithParsedQuery } from 'url';
-import { CustomRoutes } from '../../lib/load-custom-routes';
-import { __ApiPreviewProps } from '../api-utils';
-import Server, { ServerConstructor, FindComponentsResult } from '../next-server';
-import { Params } from '../router';
-import { NextConfig } from '../config';
-import { ParsedUrlQuery } from 'querystring';
-import { LoadComponentsReturnType } from '../load-components';
+import type { __ApiPreviewProps } from '../api-utils';
+import type { CustomRoutes } from '../../lib/load-custom-routes';
 import type { FetchEventResult } from '../web/types';
+import type { FindComponentsResult } from '../next-server';
+import type { IncomingMessage, ServerResponse } from 'http';
+import type { LoadComponentsReturnType } from '../load-components';
+import type { Options as ServerOptions } from '../next-server';
+import type { Params } from '../router';
 import type { ParsedNextUrl } from '../../shared/lib/router/utils/parse-next-url';
+import type { ParsedUrlQuery } from 'querystring';
+import type { Server as HTTPServer } from 'http';
+import type { UrlWithParsedQuery } from 'url';
+import Server from '../next-server';
+export interface Options extends ServerOptions {
+    /**
+     * The HTTP Server that Next.js is running behind
+     */
+    httpServer?: HTTPServer;
+    /**
+     * Tells of Next.js is running from the `next dev` command
+     */
+    isNextDevCommand?: boolean;
+}
 export default class DevServer extends Server {
     private devReady;
     private setDevReady?;
@@ -18,14 +30,11 @@ export default class DevServer extends Server {
     private isCustomServer;
     protected sortedRoutes?: string[];
     private addedUpgradeListener;
-    protected staticPathsWorker: import('jest-worker').Worker & {
+    protected staticPathsWorker?: import('jest-worker').Worker & {
         loadStaticPaths: typeof import('./static-paths-worker').loadStaticPaths;
     };
-    constructor(options: ServerConstructor & {
-        conf: NextConfig;
-        isNextDevCommand?: boolean;
-        httpServer?: HTTPServer;
-    });
+    private getStaticPathsWorker;
+    constructor(options: Options);
     protected readBuildId(): string;
     addExportPathMapRoutes(): Promise<void>;
     startWatcher(): Promise<void>;

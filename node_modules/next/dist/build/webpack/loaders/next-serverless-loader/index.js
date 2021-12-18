@@ -5,12 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _devalue = _interopRequireDefault(require("next/dist/compiled/devalue"));
 var _escapeStringRegexp = _interopRequireDefault(require("next/dist/compiled/escape-string-regexp"));
-var _loaderUtils = _interopRequireDefault(require("next/dist/compiled/loader-utils"));
 var _path = require("path");
 var _querystring = require("querystring");
 var _constants = require("../../../../lib/constants");
 var _utils = require("../../../../shared/lib/router/utils");
 var _constants1 = require("../../../../shared/lib/constants");
+var _stringifyRequest = require("../../stringify-request");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
@@ -58,7 +58,7 @@ const nextServerlessLoader = function() {
         }
 
         const apiHandler = getApiHandler({
-          pageModule: require(${_loaderUtils.default.stringifyRequest(this, absolutePagePath)}),
+          pageModule: require(${(0, _stringifyRequest).stringifyRequest(this, absolutePagePath)}),
           rewrites: combinedRewrites,
           i18n: ${i18n || 'undefined'},
           page: "${page}",
@@ -81,12 +81,12 @@ const nextServerlessLoader = function() {
         runtimeConfigSetter}
       import { getPageHandler } from 'next/dist/build/webpack/loaders/next-serverless-loader/page-handler'
 
-      const documentModule = require(${_loaderUtils.default.stringifyRequest(this, absoluteDocumentPath)})
+      const documentModule = require(${(0, _stringifyRequest).stringifyRequest(this, absoluteDocumentPath)})
 
-      const appMod = require(${_loaderUtils.default.stringifyRequest(this, absoluteAppPath)})
+      const appMod = require(${(0, _stringifyRequest).stringifyRequest(this, absoluteAppPath)})
       let App = appMod.default || appMod.then && appMod.then(mod => mod.default);
 
-      const compMod = require(${_loaderUtils.default.stringifyRequest(this, absolutePagePath)})
+      const compMod = require(${(0, _stringifyRequest).stringifyRequest(this, absolutePagePath)})
 
       const Component = compMod.default || compMod.then && compMod.then(mod => mod.default)
       export default Component
@@ -119,8 +119,8 @@ const nextServerlessLoader = function() {
         pageConfig: config,
         appModule: App,
         documentModule: documentModule,
-        errorModule: require(${_loaderUtils.default.stringifyRequest(this, absoluteErrorPath)}),
-        notFoundModule: ${absolute404Path ? `require(${_loaderUtils.default.stringifyRequest(this, absolute404Path)})` : undefined},
+        errorModule: require(${(0, _stringifyRequest).stringifyRequest(this, absoluteErrorPath)}),
+        notFoundModule: ${absolute404Path ? `require(${(0, _stringifyRequest).stringifyRequest(this, absolute404Path)})` : undefined},
         pageGetStaticProps: getStaticProps,
         pageGetStaticPaths: getStaticPaths,
         pageGetServerSideProps: getServerSideProps,

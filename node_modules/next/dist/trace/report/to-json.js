@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.batcher = batcher;
 exports.default = void 0;
 var _crypto = require("crypto");
-var _toZipkin = require("./to-zipkin");
 var _shared = require("../shared");
 var _fs = _interopRequireDefault(require("fs"));
 var _path = _interopRequireDefault(require("path"));
@@ -12,6 +12,36 @@ var _constants = require("../../shared/lib/constants");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
+    };
+}
+const localEndpoint = {
+    serviceName: 'nextjs',
+    ipv4: '127.0.0.1',
+    port: 9411
+};
+function batcher(reportEvents) {
+    const events = [];
+    // Promise queue to ensure events are always sent on flushAll
+    const queue = new Set();
+    return {
+        flushAll: async ()=>{
+            await Promise.all(queue);
+            if (events.length > 0) {
+                await reportEvents(events);
+                events.length = 0;
+            }
+        },
+        report: (event)=>{
+            events.push(event);
+            if (events.length > 100) {
+                const evts = events.slice();
+                events.length = 0;
+                const report = reportEvents(evts);
+                queue.add(report);
+                report.then(()=>queue.delete(report)
+                );
+            }
+        }
     };
 }
 let writeStream;
@@ -80,7 +110,7 @@ const reportToLocalHost = (name, duration, timestamp, id, parentId, attrs)=>{
         traceId = process.env.TRACE_ID || (0, _crypto).randomBytes(8).toString('hex');
     }
     if (!batch) {
-        batch = (0, _toZipkin).batcher(async (events)=>{
+        batch = batcher(async (events)=>{
             if (!writeStream) {
                 await _fs.default.promises.mkdir(distDir, {
                     recursive: true

@@ -1,1 +1,1 @@
-export declare function getStringifiedAbsolutePath(target: any, path: string): any;
+export declare function getStringifiedAbsolutePath(target: any, path: string): string;

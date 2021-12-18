@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _chalk = _interopRequireDefault(require("chalk"));
-var _loaderUtils = _interopRequireDefault(require("next/dist/compiled/loader-utils"));
 var _path = _interopRequireDefault(require("path"));
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -13,7 +12,8 @@ function _interopRequireDefault(obj) {
 }
 const ErrorLoader = function() {
     var ref, ref1, ref2;
-    const options = _loaderUtils.default.getOptions(this) || {
+    // @ts-ignore exists
+    const options = this.getOptions() || {
     };
     const { reason ='An unknown error has occurred'  } = options;
     var ref3;

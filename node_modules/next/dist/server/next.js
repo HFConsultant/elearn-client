@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 require("./node-polyfill-fetch");
-var _constants = require("../lib/constants");
 var log = _interopRequireWildcard(require("../build/output/log"));
 var _config = _interopRequireDefault(require("./config"));
 var _path = require("path");
+var _constants = require("../lib/constants");
 var _constants1 = require("../shared/lib/constants");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -45,6 +45,12 @@ const getServerImpl = async ()=>{
 class NextServer {
     constructor(options){
         this.options = options;
+    }
+    get hostname() {
+        return this.options.hostname;
+    }
+    get port() {
+        return this.options.port;
     }
     getRequestHandler() {
         return async (req, res, parsedUrl)=>{
@@ -138,21 +144,18 @@ class NextServer {
 exports.NextServer = NextServer;
 // This file is used for when users run `require('next')`
 function createServer(options) {
-    const standardEnv = [
-        'production',
-        'development',
-        'test'
-    ];
     if (options == null) {
         throw new Error('The server has not been instantiated properly. https://nextjs.org/docs/messages/invalid-server-options');
     }
-    if (!options.isNextDevCommand && process.env.NODE_ENV && !standardEnv.includes(process.env.NODE_ENV)) {
+    if (!('isNextDevCommand' in options) && process.env.NODE_ENV && ![
+        'production',
+        'development',
+        'test'
+    ].includes(process.env.NODE_ENV)) {
         log.warn(_constants.NON_STANDARD_NODE_ENV);
     }
-    if (options.dev) {
-        if (typeof options.dev !== 'boolean') {
-            console.warn("Warning: 'dev' is not a boolean which could introduce unexpected behavior. https://nextjs.org/docs/messages/invalid-server-options");
-        }
+    if (options.dev && typeof options.dev !== 'boolean') {
+        console.warn("Warning: 'dev' is not a boolean which could introduce unexpected behavior. https://nextjs.org/docs/messages/invalid-server-options");
     }
     return new NextServer(options);
 }

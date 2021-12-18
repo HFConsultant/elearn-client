@@ -1,7 +1,8 @@
+import type { FontManifest } from '../server/font-utils';
+import type { NextConfigComplete } from '../server/config-shared';
+import type { NextParsedUrlQuery } from '../server/request-meta';
 import AmpHtmlValidator from 'next/dist/compiled/amphtml-validator';
 import '../server/node-polyfill-fetch';
-import { FontManifest } from '../server/font-utils';
-import { NextConfigComplete } from '../server/config-shared';
 interface AmpValidation {
     page: string;
     result: {
@@ -11,9 +12,7 @@ interface AmpValidation {
 }
 interface PathMap {
     page: string;
-    query?: {
-        [key: string]: string | string[];
-    };
+    query?: NextParsedUrlQuery;
 }
 interface ExportPageInput {
     path: string;

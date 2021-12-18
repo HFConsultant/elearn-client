@@ -75,6 +75,7 @@ class Telemetry {
         this.setEnabled = (_enabled)=>{
             const enabled = !!_enabled;
             this.conf && this.conf.set(TELEMETRY_KEY_ENABLED, enabled);
+            return this.conf && this.conf.path;
         };
         this.oneWayHash = (payload)=>{
             const hash = (0, _crypto).createHash('sha256');

@@ -42,6 +42,7 @@ const eslintOptions = (args, defaultCacheLocation)=>({
         reportUnusedDisableDirectives: args['--report-unused-disable-directives'] || null,
         cache: !Boolean(args['--no-cache']),
         cacheLocation: args['--cache-location'] || defaultCacheLocation,
+        cacheStrategy: args['--cache-strategy'] || 'metadata',
         errorOnUnmatchedPattern: args['--error-on-unmatched-pattern'] ? Boolean(args['--error-on-unmatched-pattern']) : false
     })
 ;
@@ -86,6 +87,7 @@ const nextLint = async (argv)=>{
         '--cache': Boolean,
         '--no-cache': Boolean,
         '--cache-location': String,
+        '--cache-strategy': String,
         '--error-on-unmatched-pattern': Boolean,
         '--format': String,
         // Aliases
@@ -155,6 +157,7 @@ const nextLint = async (argv)=>{
         Caching:
           --no-cache                     Disable caching
           --cache-location path::String  Path to the cache file or directory - default: .eslintcache
+          --cache-strategy String        Strategy to use for detecting changed files in the cache, either metadata or content - default: metadata
         
         Miscellaneous:
           --error-on-unmatched-pattern   Show errors when any file patterns are unmatched - default: false

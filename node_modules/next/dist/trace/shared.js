@@ -2,16 +2,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.setGlobal = exports.traceGlobals = exports.TARGET = void 0;
-var TARGET;
-exports.TARGET = TARGET;
-(function(TARGET) {
-    TARGET["CONSOLE"] = "CONSOLE";
-    TARGET["ZIPKIN"] = "ZIPKIN";
-    TARGET["JAEGER"] = "JAEGER";
-    TARGET["TELEMETRY"] = "TELEMETRY";
-})(TARGET || (exports.TARGET = TARGET = {
-}));
+exports.setGlobal = exports.traceGlobals = void 0;
 const traceGlobals = new Map();
 exports.traceGlobals = traceGlobals;
 const setGlobal = (key, val)=>{

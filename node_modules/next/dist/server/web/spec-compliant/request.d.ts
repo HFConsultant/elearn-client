@@ -6,6 +6,7 @@ declare class BaseRequest extends Body implements Request {
         credentials: RequestCredentials;
         headers: Headers;
         method: string;
+        referrer: string;
         redirect: RequestRedirect;
         url: NextURL;
     };
@@ -13,6 +14,7 @@ declare class BaseRequest extends Body implements Request {
     get url(): string;
     get credentials(): RequestCredentials;
     get method(): string;
+    get referrer(): string;
     get headers(): Headers;
     get redirect(): RequestRedirect;
     clone(): BaseRequest;
@@ -21,7 +23,6 @@ declare class BaseRequest extends Body implements Request {
     get keepalive(): any;
     get mode(): any;
     get destination(): any;
-    get referrer(): any;
     get referrerPolicy(): any;
     get signal(): any;
     get [Symbol.toStringTag](): string;

@@ -23,7 +23,7 @@ export declare class Telemetry {
     get anonymousId(): string;
     get salt(): string;
     private get isDisabled();
-    setEnabled: (_enabled: boolean) => void;
+    setEnabled: (_enabled: boolean) => string | null;
     get isEnabled(): boolean;
     oneWayHash: (payload: BinaryLike) => string;
     private get projectId();

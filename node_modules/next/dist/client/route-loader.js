@@ -263,7 +263,13 @@ function createRouteLoader(assetPrefix) {
         },
         loadRoute (route, prefetch) {
             return withFuture(route, routes, ()=>{
-                const routeFilesPromise = getFilesForRoute(assetPrefix, route).then(({ scripts , css  })=>{
+                let devBuildPromiseResolve;
+                if (process.env.NODE_ENV === 'development') {
+                    devBuildPromise = new Promise((resolve)=>{
+                        devBuildPromiseResolve = resolve;
+                    });
+                }
+                return resolvePromiseWithTimeout(getFilesForRoute(assetPrefix, route).then(({ scripts , css  })=>{
                     return Promise.all([
                         entrypoints.has(route) ? [] : Promise.all(scripts.map(maybeExecuteScript)),
                         Promise.all(css.map(fetchStyleSheet)), 
@@ -274,17 +280,7 @@ function createRouteLoader(assetPrefix) {
                             styles: res[1]
                         })
                     );
-                });
-                if (process.env.NODE_ENV === 'development') {
-                    devBuildPromise = new Promise((resolve)=>{
-                        if (routeFilesPromise) {
-                            return routeFilesPromise.finally(()=>{
-                                resolve();
-                            });
-                        }
-                    });
-                }
-                return resolvePromiseWithTimeout(routeFilesPromise, MS_MAX_IDLE_DELAY, markAssetError(new Error(`Route did not complete loading: ${route}`))).then(({ entrypoint , styles  })=>{
+                }), MS_MAX_IDLE_DELAY, markAssetError(new Error(`Route did not complete loading: ${route}`))).then(({ entrypoint , styles  })=>{
                     const res = Object.assign({
                         styles: styles
                     }, entrypoint);
@@ -297,6 +293,8 @@ function createRouteLoader(assetPrefix) {
                     return {
                         error: err
                     };
+                }).finally(()=>{
+                    return devBuildPromiseResolve === null || devBuildPromiseResolve === void 0 ? void 0 : devBuildPromiseResolve();
                 });
             });
         },

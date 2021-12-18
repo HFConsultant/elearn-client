@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var _fs = require("fs");
-var _loaderUtils = _interopRequireDefault(require("next/dist/compiled/loader-utils"));
+var _loaderUtils3 = _interopRequireDefault(require("next/dist/compiled/loader-utils3"));
 var _webpack = require("next/dist/compiled/webpack/webpack");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -38,7 +38,7 @@ class CopyFilePlugin {
                     }
                 }
                 const content = await _fs.promises.readFile(this.filePath, 'utf8');
-                const file = _loaderUtils.default.interpolateName({
+                const file = _loaderUtils3.default.interpolateName({
                     resourcePath: this.filePath
                 }, this.name, {
                     content,

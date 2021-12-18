@@ -1,11 +1,12 @@
 /// <reference types="node" />
-import { ParsedUrlQuery } from 'querystring';
-import { ComponentType } from 'react';
-import { UrlObject } from 'url';
-import { GoodPageCache, StyleSheetTuple } from '../../../client/page-loader';
-import { RouterEvent } from '../../../client/router';
+import type { ComponentType } from 'react';
 import type { DomainLocale } from '../../../server/config';
-import { MittEmitter } from '../mitt';
+import type { MittEmitter } from '../mitt';
+import type { ParsedUrlQuery } from 'querystring';
+import type { RouterEvent } from '../../../client/router';
+import type { StyleSheetTuple } from '../../../client/page-loader';
+import type { UrlObject } from 'url';
+import type PageLoader from '../../../client/page-loader';
 import { NextPageContext, NEXT_DATA } from '../utils';
 import { parseRelativeUrl } from './utils/parse-relative-url';
 declare global {
@@ -136,7 +137,7 @@ export default class Router implements BaseRouter {
     };
     sub: Subscription;
     clc: ComponentLoadCancel;
-    pageLoader: any;
+    pageLoader: PageLoader;
     _bps: BeforePopStateCallback | undefined;
     events: MittEmitter<RouterEvent>;
     _wrapApp: (App: AppComponent) => any;
@@ -214,7 +215,7 @@ export default class Router implements BaseRouter {
      * @param asPath the as path of the prefetched page
      */
     prefetch(url: string, asPath?: string, options?: PrefetchOptions): Promise<void>;
-    fetchComponent(route: string): Promise<GoodPageCache>;
+    fetchComponent(route: string): Promise<import("../../../client/page-loader").GoodPageCache>;
     _getData<T>(fn: () => Promise<T>): Promise<T>;
     _getFlightData(dataHref: string): Promise<object>;
     _preflightRequest(options: {

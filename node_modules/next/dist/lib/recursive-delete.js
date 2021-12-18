@@ -13,14 +13,18 @@ function _interopRequireDefault(obj) {
     };
 }
 const sleep = (0, _util).promisify(setTimeout);
-const unlinkFile = async (p, t = 1)=>{
+const unlinkPath = async (p, isDir = false, t = 1)=>{
     try {
-        await _fs.promises.unlink(p);
+        if (isDir) {
+            await _fs.promises.rmdir(p);
+        } else {
+            await _fs.promises.unlink(p);
+        }
     } catch (e) {
         const code = (0, _isError).default(e) && e.code;
         if ((code === 'EBUSY' || code === 'ENOTEMPTY' || code === 'EPERM' || code === 'EMFILE') && t < 3) {
             await sleep(t * 100);
-            return unlinkFile(p, t++);
+            return unlinkPath(p, isDir, t++);
         }
         if (code === 'ENOENT') {
             return;
@@ -45,17 +49,22 @@ async function recursiveDelete(dir, exclude, previousPath = '') {
         // readdir does not follow symbolic links
         // if part is a symbolic link, follow it using stat
         let isDirectory = part.isDirectory();
-        if (part.isSymbolicLink()) {
-            const stats = await _fs.promises.stat(absolutePath);
-            isDirectory = stats.isDirectory();
+        const isSymlink = part.isSymbolicLink();
+        if (isSymlink) {
+            const linkPath = await _fs.promises.readlink(absolutePath);
+            try {
+                const stats = await _fs.promises.stat((0, _path).isAbsolute(linkPath) ? linkPath : (0, _path).join((0, _path).dirname(absolutePath), linkPath));
+                isDirectory = stats.isDirectory();
+            } catch (_) {
+            }
         }
         const pp = (0, _path).join(previousPath, part.name);
-        if (isDirectory && (!exclude || !exclude.test(pp))) {
-            await recursiveDelete(absolutePath, exclude, pp);
-            return _fs.promises.rmdir(absolutePath);
-        }
-        if (!exclude || !exclude.test(pp)) {
-            return unlinkFile(absolutePath);
+        const isNotExcluded = !exclude || !exclude.test(pp);
+        if (isNotExcluded) {
+            if (isDirectory) {
+                await recursiveDelete(absolutePath, exclude, pp);
+            }
+            return unlinkPath(absolutePath, !isSymlink && isDirectory);
         }
     }));
 }

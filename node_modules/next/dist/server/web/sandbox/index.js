@@ -2,7 +2,14 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+Object.defineProperty(exports, "clearModuleContext", {
+    enumerable: true,
+    get: function() {
+        return _context.clearModuleContext;
+    }
+});
 var _sandbox = _interopRequireWildcard(require("./sandbox"));
+var _context = require("./context");
 function _interopRequireWildcard(obj) {
     if (obj && obj.__esModule) {
         return obj;

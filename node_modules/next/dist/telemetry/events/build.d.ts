@@ -59,7 +59,7 @@ export declare function eventBuildOptimize(pagePaths: string[], event: Omit<Even
 };
 export declare const EVENT_BUILD_FEATURE_USAGE = "NEXT_BUILD_FEATURE_USAGE";
 export declare type EventBuildFeatureUsage = {
-    featureName: 'next/image' | 'next/script' | 'next/dynamic' | 'experimental/optimizeCss' | 'swcLoader' | 'swcMinify';
+    featureName: 'next/image' | 'next/script' | 'next/dynamic' | 'experimental/optimizeCss' | 'optimizeFonts' | 'swcLoader' | 'swcMinify';
     invocationCount: number;
 };
 export declare function eventBuildFeatureUsage(telemetryPlugin: TelemetryPlugin): Array<{

@@ -1,22 +1,18 @@
-/// <reference types="node" />
+import type { Options as DevServerOptions } from './dev/next-dev-server';
+import type { RequestHandler } from './next-server';
 import './node-polyfill-fetch';
-import { default as Server, ServerConstructor } from './next-server';
-import { IncomingMessage, ServerResponse } from 'http';
-import { UrlWithParsedQuery } from 'url';
-declare type NextServerConstructor = ServerConstructor & {
-    /**
-     * Whether to launch Next.js in dev mode - @default false
-     */
-    dev?: boolean;
-};
+import { default as Server } from './next-server';
+export declare type NextServerOptions = Partial<DevServerOptions>;
 export declare class NextServer {
     private serverPromise?;
     private server?;
     private reqHandlerPromise?;
     private preparedAssetPrefix?;
-    options: NextServerConstructor;
-    constructor(options: NextServerConstructor);
-    getRequestHandler(): (req: IncomingMessage, res: ServerResponse, parsedUrl?: UrlWithParsedQuery | undefined) => Promise<any>;
+    options: NextServerOptions;
+    constructor(options: NextServerOptions);
+    get hostname(): string | undefined;
+    get port(): number | undefined;
+    getRequestHandler(): RequestHandler;
     setAssetPrefix(assetPrefix: string): void;
     logError(...args: Parameters<Server['logError']>): void;
     render(...args: Parameters<Server['render']>): Promise<void>;
@@ -32,5 +28,6 @@ export declare class NextServer {
     private getServer;
     private getServerRequestHandler;
 }
-declare function createServer(options: NextServerConstructor): NextServer;
+declare function createServer(options: NextServerOptions): NextServer;
 export default createServer;
+export type { RequestHandler };

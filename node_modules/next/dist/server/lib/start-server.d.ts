@@ -1,4 +1,6 @@
-export default function start(serverOptions: any, port?: number, hostname?: string): Promise<{
-    app: import("../next").NextServer;
-    actualPort: number | undefined;
-}>;
+import type { NextServerOptions, NextServer } from '../next';
+interface StartServerOptions extends NextServerOptions {
+    allowRetry?: boolean;
+}
+export declare function startServer(opts: StartServerOptions): Promise<NextServer>;
+export {};

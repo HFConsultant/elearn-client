@@ -37,7 +37,9 @@ export declare class Head extends Component<OriginProps & React.DetailedHTMLProp
     makeStylesheetInert(node: ReactNode): ReactNode[];
     render(): JSX.Element;
 }
-export declare function Main(): JSX.Element;
+export declare function Main({ children, }: {
+    children?: (content: JSX.Element) => JSX.Element;
+}): JSX.Element;
 export declare class NextScript extends Component<OriginProps> {
     static contextType: React.Context<HtmlProps>;
     context: React.ContextType<typeof HtmlContext>;

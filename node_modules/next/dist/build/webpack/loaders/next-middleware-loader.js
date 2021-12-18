@@ -3,15 +3,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = middlewareLoader;
-var _loaderUtils = _interopRequireDefault(require("next/dist/compiled/loader-utils"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        default: obj
-    };
-}
+var _stringifyRequest = require("../stringify-request");
 function middlewareLoader() {
-    const { absolutePagePath , page  } = _loaderUtils.default.getOptions(this);
-    const stringifiedPagePath = _loaderUtils.default.stringifyRequest(this, absolutePagePath);
+    const { absolutePagePath , page  } = this.getOptions();
+    const stringifiedPagePath = (0, _stringifyRequest).stringifyRequest(this, absolutePagePath);
     return `
         import { adapter } from 'next/dist/server/web/adapter'
 

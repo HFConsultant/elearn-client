@@ -31,6 +31,8 @@ class PageLoader {
                 return window.__DEV_PAGES_MANIFEST.pages;
             } else {
                 if (!this.promisedDevPagesManifest) {
+                    // TODO: Decide what should happen when fetching fails instead of asserting
+                    // @ts-ignore
                     this.promisedDevPagesManifest = fetch(`${this.assetPrefix}/_next/static/development/_devPagesManifest.json`).then((res)=>res.json()
                     ).then((manifest)=>{
                         window.__DEV_PAGES_MANIFEST = manifest;
@@ -39,6 +41,7 @@ class PageLoader {
                         console.log(`Failed to fetch devPagesManifest`, err);
                     });
                 }
+                // TODO Remove this assertion as this could be undefined
                 return this.promisedDevPagesManifest;
             }
         }
@@ -51,6 +54,8 @@ class PageLoader {
                 return window.__DEV_MIDDLEWARE_MANIFEST;
             } else {
                 if (!this.promisedMiddlewareManifest) {
+                    // TODO: Decide what should happen when fetching fails instead of asserting
+                    // @ts-ignore
                     this.promisedMiddlewareManifest = fetch(`${this.assetPrefix}/_next/static/${this.buildId}/_devMiddlewareManifest.json`).then((res)=>res.json()
                     ).then((manifest)=>{
                         window.__DEV_MIDDLEWARE_MANIFEST = manifest;
@@ -59,6 +64,7 @@ class PageLoader {
                         console.log(`Failed to fetch _devMiddlewareManifest`, err);
                     });
                 }
+                // TODO Remove this assertion as this could be undefined
                 return this.promisedMiddlewareManifest;
             }
         }
@@ -83,7 +89,7 @@ class PageLoader {
     /**
    * @param {string} route - the route (file-system path)
    */ _isSsg(route) {
-        return this.promisedSsgManifest.then((s)=>s.has(route)
+        return this.promisedSsgManifest.then((manifest)=>manifest.has(route)
         );
     }
     loadPage(route) {
@@ -109,7 +115,7 @@ class PageLoader {
         this.routeLoader = (0, _routeLoader).createRouteLoader(assetPrefix);
         this.buildId = buildId;
         this.assetPrefix = assetPrefix;
-        /** @type {Promise<Set<string>>} */ this.promisedSsgManifest = new Promise((resolve)=>{
+        this.promisedSsgManifest = new Promise((resolve)=>{
             if (window.__SSG_MANIFEST) {
                 resolve(window.__SSG_MANIFEST);
             } else {

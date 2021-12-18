@@ -86,9 +86,7 @@ async function lint(baseDir, lintDirs, eslintrcFile, pkgJsonPath, lintDuringBuil
         const deps = await (0, _hasNecessaryDependencies).hasNecessaryDependencies(baseDir, requiredPackages);
         if (deps.missing.some((dep)=>dep.pkg === 'eslint'
         )) {
-            Log.error(`ESLint must be installed${lintDuringBuild ? ' in order to run during builds:' : ':'} ${_chalk.default.bold.cyan(await (0, _isYarn).isYarn(baseDir) ? 'yarn add --dev eslint@"<8.0.0"' // TODO: Remove @"<8.0.0" when ESLint v8 is supported https://github.com/vercel/next.js/pull/29865
-             : 'npm install --save-dev eslint@"<8.0.0"' // TODO: Remove @"<8.0.0" when ESLint v8 is supported https://github.com/vercel/next.js/pull/29865
-            )}`);
+            Log.error(`ESLint must be installed${lintDuringBuild ? ' in order to run during builds:' : ':'} ${_chalk.default.bold.cyan(await (0, _isYarn).isYarn(baseDir) ? 'yarn add --dev eslint' : 'npm install --save-dev eslint')}`);
             return null;
         }
         const mod = await Promise.resolve(require(deps.resolved.get('eslint')));
@@ -96,10 +94,7 @@ async function lint(baseDir, lintDirs, eslintrcFile, pkgJsonPath, lintDuringBuil
         var ref2;
         let eslintVersion = (ref2 = ESLint === null || ESLint === void 0 ? void 0 : ESLint.version) !== null && ref2 !== void 0 ? ref2 : mod === null || mod === void 0 ? void 0 : (ref11 = mod.CLIEngine) === null || ref11 === void 0 ? void 0 : ref11.version;
         if (!eslintVersion || _semver.default.lt(eslintVersion, '7.0.0')) {
-            return `${_chalk.default.red('error')} - Your project has an older version of ESLint installed${eslintVersion ? ' (' + eslintVersion + ')' : ''}. Please upgrade to ESLint version 7`;
-        } else if (_semver.default.gte(eslintVersion, '8.0.0')) {
-            // TODO: Remove this check when ESLint v8 is supported https://github.com/vercel/next.js/pull/29865
-            return `${_chalk.default.red('error')} - ESLint version ${eslintVersion ? eslintVersion : '8'} is not yet supported. Please downgrade to version 7 for the meantime: ${_chalk.default.bold.cyan(await (0, _isYarn).isYarn(baseDir) ? 'yarn remove eslint && yarn add --dev eslint@"<8.0.0"' : 'npm uninstall eslint && npm install --save-dev eslint@"<8.0.0"')}`;
+            return `${_chalk.default.red('error')} - Your project has an older version of ESLint installed${eslintVersion ? ' (' + eslintVersion + ')' : ''}. Please upgrade to ESLint version 7 or above`;
         }
         let options = {
             useEslintrc: true,
@@ -174,7 +169,7 @@ async function lint(baseDir, lintDirs, eslintrcFile, pkgJsonPath, lintDuringBuil
                 eslintVersion: eslintVersion,
                 lintedFilesCount: results.length,
                 lintFix: !!options.fix,
-                nextEslintPluginVersion: nextEslintPluginIsEnabled ? require(_path.default.join(_path.default.dirname(deps.resolved.get('eslint-config-next')), 'package.json')).version : null,
+                nextEslintPluginVersion: nextEslintPluginIsEnabled && deps.resolved.has('eslint-config-next') ? require(_path.default.join(_path.default.dirname(deps.resolved.get('eslint-config-next')), 'package.json')).version : null,
                 nextEslintPluginErrorsCount: formattedResult.totalNextPluginErrorCount,
                 nextEslintPluginWarningsCount: formattedResult.totalNextPluginWarningCount
             }

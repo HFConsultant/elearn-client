@@ -39,13 +39,26 @@ function _interopRequireDefault(obj) {
         default: obj
     };
 }
-var _default = _asyncToGenerator(function*() {
-    setInterval(()=>{
-        (0, _websocket).sendMessage(JSON.stringify({
-            event: 'ping',
-            page: _router.default.pathname
-        }));
-    }, 2500);
+var _default = _asyncToGenerator(function*(page) {
+    if (page) {
+        // in AMP the router isn't initialized on the client and
+        // client-transitions don't occur so ping initial page
+        setInterval(()=>{
+            (0, _websocket).sendMessage(JSON.stringify({
+                event: 'ping',
+                page
+            }));
+        }, 2500);
+    } else {
+        _router.default.ready(()=>{
+            setInterval(()=>{
+                (0, _websocket).sendMessage(JSON.stringify({
+                    event: 'ping',
+                    page: _router.default.pathname
+                }));
+            }, 2500);
+        });
+    }
     (0, _websocket).addMessageListener((event)=>{
         if (event.data.indexOf('{') === -1) return;
         try {

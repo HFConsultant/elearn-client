@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.nextDev = void 0;
 var _indexJs = _interopRequireDefault(require("next/dist/compiled/arg/index.js"));
 var _fs = require("fs");
-var _startServer = _interopRequireDefault(require("../server/lib/start-server"));
+var _startServer = require("../server/lib/start-server");
 var _utils = require("../server/lib/utils");
 var Log = _interopRequireWildcard(require("../build/output/log"));
 var _output = require("../build/output");
@@ -102,6 +102,7 @@ const nextDev = (argv)=>{
             Log.warn('Your project has both `sass` and `node-sass` installed as dependencies, but should only use one or the other. ' + 'Please remove the `node-sass` dependency from your project. ' + ' Read more: https://nextjs.org/docs/messages/duplicate-sass');
         }
     }
+    const allowRetry = !args['--port'];
     let port = args['--port'] || process.env.PORT && parseInt(process.env.PORT) || 3000;
     // we allow the server to use a random port while testing
     // instead of attempting to find a random port and then hope
@@ -112,13 +113,16 @@ const nextDev = (argv)=>{
     // We do not set a default host value here to prevent breaking
     // some set-ups that rely on listening on other interfaces
     const host = args['--hostname'];
-    (0, _startServer).default({
-        dir,
+    (0, _startServer).startServer({
+        allowRetry,
         dev: true,
-        isNextDevCommand: true
-    }, port, host).then(async ({ app , actualPort  })=>{
-        const appUrl = `http://${!host || host === '0.0.0.0' ? 'localhost' : host}:${actualPort}`;
-        (0, _output).startedDevelopmentServer(appUrl, `${host || '0.0.0.0'}:${actualPort}`);
+        dir,
+        hostname: host,
+        isNextDevCommand: true,
+        port
+    }).then(async (app)=>{
+        const appUrl = `http://${app.hostname}:${app.port}`;
+        (0, _output).startedDevelopmentServer(appUrl, `${host || '0.0.0.0'}:${app.port}`);
         // Start preflight after server is listening and ignore errors:
         preflight().catch(()=>{
         });

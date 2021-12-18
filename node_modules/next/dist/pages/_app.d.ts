@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContextType, AppInitialProps, AppPropsType, NextWebVitalsMetric } from '../shared/lib/utils';
-import { Router } from '../client/router';
+import type { Router } from '../client/router';
 export { AppInitialProps };
 export { NextWebVitalsMetric };
 export declare type AppContext = AppContextType<Router>;

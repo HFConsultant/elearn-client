@@ -1,6 +1,7 @@
 import { webpack } from 'next/dist/compiled/webpack/webpack';
 import { NextConfigComplete } from '../../../server/config-shared';
 export declare type ConfigurationContext = {
+    supportedBrowsers: string[] | undefined;
     rootDirectory: string;
     customAppFile: RegExp;
     isDevelopment: boolean;

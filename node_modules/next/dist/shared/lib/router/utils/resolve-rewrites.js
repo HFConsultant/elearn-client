@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = resolveRewrites;
 var _pathMatch = _interopRequireDefault(require("./path-match"));
-var _prepareDestination = _interopRequireWildcard(require("./prepare-destination"));
+var _prepareDestination = require("./prepare-destination");
 var _normalizeTrailingSlash = require("../../../../client/normalize-trailing-slash");
 var _normalizeLocalePath = require("../../i18n/normalize-locale-path");
 var _parseRelativeUrl = require("./parse-relative-url");
@@ -13,29 +13,6 @@ function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
     };
-}
-function _interopRequireWildcard(obj) {
-    if (obj && obj.__esModule) {
-        return obj;
-    } else {
-        var newObj = {
-        };
-        if (obj != null) {
-            for(var key in obj){
-                if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                    var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {
-                    };
-                    if (desc.get || desc.set) {
-                        Object.defineProperty(newObj, key, desc);
-                    } else {
-                        newObj[key] = obj[key];
-                    }
-                }
-            }
-        }
-        newObj.default = obj;
-        return newObj;
-    }
 }
 const customRouteMatcher = (0, _pathMatch).default(true);
 function resolveRewrites(asPath, pages, rewrites, query, resolveHref, locales) {
@@ -69,7 +46,12 @@ function resolveRewrites(asPath, pages, rewrites, query, resolveHref, locales) {
                 // this is a proxied rewrite which isn't handled on the client
                 return true;
             }
-            const destRes = (0, _prepareDestination).default(rewrite.destination, params, query, true);
+            const destRes = (0, _prepareDestination).prepareDestination({
+                appendParamsToQuery: true,
+                destination: rewrite.destination,
+                params: params,
+                query: query
+            });
             parsedAs = destRes.parsedDestination;
             asPath = destRes.newUrl;
             Object.assign(query, destRes.parsedDestination.query);

@@ -90,7 +90,7 @@ const nextBuild = (argv)=>{
     }
     return (0, _build).default(dir, null, args['--profile'], args['--debug'], !args['--no-lint']).catch((err)=>{
         console.error('');
-        if ((0, _isError).default(err) && (err.code === 'INVALID_RESOLVE_ALIAS' || err.code === 'WEBPACK_ERRORS' || err.code === 'BUILD_OPTIMIZATION_FAILED')) {
+        if ((0, _isError).default(err) && (err.code === 'INVALID_RESOLVE_ALIAS' || err.code === 'WEBPACK_ERRORS' || err.code === 'BUILD_OPTIMIZATION_FAILED' || err.code === 'EDGE_RUNTIME_UNSUPPORTED_API')) {
             (0, _utils).printAndExit(`> ${err.message}`);
         } else {
             console.error('> Build error occurred');

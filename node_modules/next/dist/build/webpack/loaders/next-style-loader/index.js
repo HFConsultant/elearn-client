@@ -1,7 +1,7 @@
 "use strict";
-var _loaderUtils = _interopRequireDefault(require("next/dist/compiled/loader-utils"));
 var _path = _interopRequireDefault(require("path"));
 var _isEqualLocals = _interopRequireDefault(require("./runtime/isEqualLocals"));
+var _stringifyRequest = require("../../stringify-request");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
@@ -12,7 +12,7 @@ const loaderApi = ()=>{
 loaderApi.pitch = function loader(request) {
     const loaderSpan = this.currentTraceSpan.traceChild('next-style-loader');
     return loaderSpan.traceFn(()=>{
-        const options = _loaderUtils.default.getOptions(this);
+        const options = this.getOptions();
         const insert = typeof options.insert === 'undefined' ? '"head"' : typeof options.insert === 'string' ? JSON.stringify(options.insert) : options.insert.toString();
         const injectType = options.injectType || 'styleTag';
         const esModule = typeof options.esModule !== 'undefined' ? options.esModule : false;
@@ -23,9 +23,9 @@ loaderApi.pitch = function loader(request) {
                     const hmrCode = this.hot ? `
 if (module.hot) {
   module.hot.accept(
-    ${_loaderUtils.default.stringifyRequest(this, `!!${request}`)},
+    ${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)},
     function() {
-     ${esModule ? 'update(content);' : `content = require(${_loaderUtils.default.stringifyRequest(this, `!!${request}`)});
+     ${esModule ? 'update(content);' : `content = require(${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)});
 
            content = content.__esModule ? content.default : content;
 
@@ -37,9 +37,9 @@ if (module.hot) {
     update();
   });
 }` : '';
-                    return `${esModule ? `import api from ${_loaderUtils.default.stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoLinkTag.js')}`)};
-            import content from ${_loaderUtils.default.stringifyRequest(this, `!!${request}`)};` : `var api = require(${_loaderUtils.default.stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoLinkTag.js')}`)});
-            var content = require(${_loaderUtils.default.stringifyRequest(this, `!!${request}`)});
+                    return `${esModule ? `import api from ${(0, _stringifyRequest).stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoLinkTag.js')}`)};
+            import content from ${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)};` : `var api = require(${(0, _stringifyRequest).stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoLinkTag.js')}`)});
+            var content = require(${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)});
 
             content = content.__esModule ? content.default : content;`}
 
@@ -64,7 +64,7 @@ if (module.hot) {
     var oldLocals = content.locals;
 
     module.hot.accept(
-      ${_loaderUtils.default.stringifyRequest(this, `!!${request}`)},
+      ${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)},
       function () {
         ${esModule ? `if (!isEqualLocals(oldLocals, content.locals)) {
                 module.hot.invalidate();
@@ -76,7 +76,7 @@ if (module.hot) {
 
               if (update && refs > 0) {
                 update(content);
-              }` : `content = require(${_loaderUtils.default.stringifyRequest(this, `!!${request}`)});
+              }` : `content = require(${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)});
 
               content = content.__esModule ? content.default : content;
 
@@ -101,9 +101,9 @@ if (module.hot) {
     }
   });
 }` : '';
-                    return `${esModule ? `import api from ${_loaderUtils.default.stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)};
-            import content from ${_loaderUtils.default.stringifyRequest(this, `!!${request}`)};` : `var api = require(${_loaderUtils.default.stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)});
-            var content = require(${_loaderUtils.default.stringifyRequest(this, `!!${request}`)});
+                    return `${esModule ? `import api from ${(0, _stringifyRequest).stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)};
+            import content from ${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)};` : `var api = require(${(0, _stringifyRequest).stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)});
+            var content = require(${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)});
 
             content = content.__esModule ? content.default : content;
 
@@ -151,7 +151,7 @@ if (module.hot) {
     var oldLocals = content.locals;
 
     module.hot.accept(
-      ${_loaderUtils.default.stringifyRequest(this, `!!${request}`)},
+      ${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)},
       function () {
         ${esModule ? `if (!isEqualLocals(oldLocals, content.locals)) {
                 module.hot.invalidate();
@@ -161,7 +161,7 @@ if (module.hot) {
 
               oldLocals = content.locals;
 
-              update(content);` : `content = require(${_loaderUtils.default.stringifyRequest(this, `!!${request}`)});
+              update(content);` : `content = require(${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)});
 
               content = content.__esModule ? content.default : content;
 
@@ -186,9 +186,9 @@ if (module.hot) {
     update();
   });
 }` : '';
-                    return `${esModule ? `import api from ${_loaderUtils.default.stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)};
-            import content from ${_loaderUtils.default.stringifyRequest(this, `!!${request}`)};` : `var api = require(${_loaderUtils.default.stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)});
-            var content = require(${_loaderUtils.default.stringifyRequest(this, `!!${request}`)});
+                    return `${esModule ? `import api from ${(0, _stringifyRequest).stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)};
+            import content from ${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)};` : `var api = require(${(0, _stringifyRequest).stringifyRequest(this, `!${_path.default.join(__dirname, 'runtime/injectStylesIntoStyleTag.js')}`)});
+            var content = require(${(0, _stringifyRequest).stringifyRequest(this, `!!${request}`)});
 
             content = content.__esModule ? content.default : content;
 

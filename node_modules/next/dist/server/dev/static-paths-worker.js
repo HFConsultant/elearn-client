@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.loadStaticPaths = loadStaticPaths;
-var _utils = require("../../build/utils");
-var _config = require("../config");
-var _loadComponents = require("../load-components");
 require("../node-polyfill-fetch");
+var _utils = require("../../build/utils");
+var _loadComponents = require("../load-components");
+var _config = require("../config");
 let workerWasUsed = false;
 async function loadStaticPaths(distDir, pathname, serverless, config, httpAgentOptions, locales, defaultLocale) {
     // we only want to use each worker once to prevent any invalid

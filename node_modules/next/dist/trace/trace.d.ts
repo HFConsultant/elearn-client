@@ -26,5 +26,7 @@ export declare class Span {
     traceFn(fn: any): any;
     traceAsyncFn<T>(fn: () => T | Promise<T>): Promise<T>;
 }
-export declare const trace: (name: string, parentId?: string | undefined, attrs?: Object | undefined) => Span;
+export declare const trace: (name: string, parentId?: string | undefined, attrs?: {
+    [key: string]: string;
+} | undefined) => Span;
 export declare const flushAllTraces: () => Promise<void>;

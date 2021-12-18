@@ -6,11 +6,12 @@ exports.parseNextUrl = parseNextUrl;
 var _apiUtils = require("../../../../server/api-utils");
 var _getLocaleMetadata = require("../../i18n/get-locale-metadata");
 var _parseUrl = require("./parse-url");
+var _router = require("../../../../server/router");
 function parseNextUrl({ headers , nextConfig , url ='/'  }) {
     const urlParsed = (0, _parseUrl).parseUrl(url);
     const { basePath  } = nextConfig;
-    if (basePath && urlParsed.pathname.startsWith(basePath)) {
-        urlParsed.pathname = urlParsed.pathname.replace(basePath, '') || '/';
+    if (basePath && (0, _router).hasBasePath(urlParsed.pathname, basePath)) {
+        urlParsed.pathname = (0, _router).replaceBasePath(urlParsed.pathname, basePath);
         urlParsed.basePath = basePath;
     }
     if (nextConfig.i18n) {

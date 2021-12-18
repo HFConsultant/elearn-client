@@ -3,19 +3,14 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = void 0;
-var _loaderUtils = _interopRequireDefault(require("next/dist/compiled/loader-utils"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        default: obj
-    };
-}
+var _stringifyRequest = require("../stringify-request");
 // this parameter: https://www.typescriptlang.org/docs/handbook/functions.html#this-parameters
 function nextClientPagesLoader() {
     const pagesLoaderSpan = this.currentTraceSpan.traceChild('next-client-pages-loader');
     return pagesLoaderSpan.traceFn(()=>{
-        const { absolutePagePath , page  } = _loaderUtils.default.getOptions(this);
+        const { absolutePagePath , page  } = this.getOptions();
         pagesLoaderSpan.setAttribute('absolutePagePath', absolutePagePath);
-        const stringifiedPagePath = _loaderUtils.default.stringifyRequest(this, absolutePagePath);
+        const stringifiedPagePath = (0, _stringifyRequest).stringifyRequest(this, absolutePagePath);
         const stringifiedPage = JSON.stringify(page);
         return `
     (window.__NEXT_P = window.__NEXT_P || []).push([

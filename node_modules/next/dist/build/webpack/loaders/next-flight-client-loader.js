@@ -78,7 +78,7 @@ function resolveClientImport(specifier, parentURL) {
 }
 async function parseExportNamesInto(transformedSource, names, parentURL, loadModule) {
     const { body  } = acorn.parse(transformedSource, {
-        ecmaVersion: 2019,
+        ecmaVersion: 11,
         sourceType: 'module'
     });
     for(let i = 0; i < body.length; i++){

@@ -4,18 +4,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 var _getLocaleMetadata = require("../../shared/lib/i18n/get-locale-metadata");
 var _cookie = _interopRequireDefault(require("next/dist/compiled/cookie"));
+var _router = require("../router");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
     };
 }
+const REGEX_LOCALHOST_HOSTNAME = /(?!^https?:\/\/)(127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}|::1)/;
 class NextURL extends URL {
-    constructor(url, options = {
+    constructor(input, options = {
     }){
-        super(formatRelative(url));
+        const url = createWHATWGURL(input);
+        super(url);
         this._options = options;
         this._basePath = '';
-        this._url = formatRelative(url);
+        this._url = url;
         this.analyzeUrl();
     }
     get absolute() {
@@ -25,7 +28,7 @@ class NextURL extends URL {
         const { headers ={
         } , basePath , i18n  } = this._options;
         if (basePath && this._url.pathname.startsWith(basePath)) {
-            this._url.pathname = this._url.pathname.replace(basePath, '') || '/';
+            this._url.pathname = (0, _router).replaceBasePath(this._url.pathname, basePath);
             this._basePath = basePath;
         } else {
             this._basePath = '';
@@ -118,7 +121,7 @@ class NextURL extends URL {
         return this.absolute ? `${this.protocol}//${this.host}${pathname}${this._url.search}` : `${pathname}${this._url.search}`;
     }
     set href(url) {
-        this._url = formatRelative(url);
+        this._url = createWHATWGURL(url);
         this.analyzeUrl();
     }
     get origin() {
@@ -168,8 +171,12 @@ class NextURL extends URL {
     }
 }
 exports.NextURL = NextURL;
-function formatRelative(url) {
-    return url.startsWith('/') ? new URL(url.replace(/^\/+/, '/'), new URL('https://localhost')) : new URL(url);
+function createWHATWGURL(url) {
+    url = url.replace(REGEX_LOCALHOST_HOSTNAME, 'localhost');
+    return isRelativeURL(url) ? new URL(url.replace(/^\/+/, '/'), new URL('https://localhost')) : new URL(url);
+}
+function isRelativeURL(url) {
+    return url.startsWith('/');
 }
 
 //# sourceMappingURL=next-url.js.map

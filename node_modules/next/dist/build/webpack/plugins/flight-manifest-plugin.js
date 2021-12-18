@@ -81,7 +81,7 @@ class FlightManifestPlugin {
                 }
             });
         });
-        const output = `self._middleware_rsc_manifest=(typeof _ENTRIES === "undefined"?{}:_ENTRIES)._middleware_rsc_manifest=` + JSON.stringify(json);
+        const output = `self.__RSC_MANIFEST=` + JSON.stringify(json);
         assets[`server/${_constants.MIDDLEWARE_FLIGHT_MANIFEST}.js`] = new _webpack.sources.RawSource(output);
     }
 }

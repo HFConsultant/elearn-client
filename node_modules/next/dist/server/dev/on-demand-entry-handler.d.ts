@@ -4,7 +4,7 @@ import { NextConfigComplete } from '../config-shared';
 export declare const ADDED: unique symbol;
 export declare const BUILDING: unique symbol;
 export declare const BUILT: unique symbol;
-export declare let entries: {
+export declare const entries: {
     [page: string]: {
         bundlePath: string;
         absolutePagePath: string;

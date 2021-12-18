@@ -242,7 +242,7 @@ function assignDefaults(userConfig) {
         if (!_imageConfig.VALID_LOADERS.includes(images.loader)) {
             throw new Error(`Specified images.loader should be one of (${_imageConfig.VALID_LOADERS.join(', ')}), received invalid value (${images.loader}).\nSee more info here: https://nextjs.org/docs/messages/invalid-images-config`);
         }
-        if (images.loader !== 'default' && images.loader !== 'custom' && !(images.path || '').startsWith('http')) {
+        if (images.loader !== 'default' && images.loader !== 'custom' && images.path === _imageConfig.imageConfigDefault.path) {
             throw new Error(`Specified images.loader property (${images.loader}) also requires images.path property to be assigned to a URL prefix.\nSee more info here: https://nextjs.org/docs/api-reference/next/image#loader-configuration`);
         }
         // Append trailing slash for non-default loaders and when trailingSlash is set

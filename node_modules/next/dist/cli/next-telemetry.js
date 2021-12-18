@@ -58,9 +58,9 @@ const nextTelemetry = (argv)=>{
         console.log();
         isEnabled = true;
     } else if (args['--disable'] || args._[0] === 'disable') {
-        telemetry.setEnabled(false);
+        const path = telemetry.setEnabled(false);
         if (isEnabled) {
-            console.log(_chalk.default.cyan('Your preference has been saved.'));
+            console.log(_chalk.default.cyan(`Your preference has been saved${path ? ` to ${path}` : ''}.`));
         } else {
             console.log(_chalk.default.yellow(`Next.js' telemetry collection is already disabled.`));
         }

@@ -69,8 +69,9 @@ async function processBuffer(buffer, operations, encoding, quality) {
                 quality
             }));
         case 'avif':
+            const avifQuality = quality - 20;
             return Buffer.from(await worker.encodeAvif(imageData, {
-                quality
+                quality: Math.max(avifQuality, 0)
             }));
         case 'png':
             return Buffer.from(await worker.encodePng(imageData));

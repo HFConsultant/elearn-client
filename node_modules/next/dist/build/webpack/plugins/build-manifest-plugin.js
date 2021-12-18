@@ -147,7 +147,7 @@ class BuildManifestPlugin {
                 const ssgManifestPath = `${_constants.CLIENT_STATIC_FILES_PATH}/${this.buildId}/_ssgManifest.js`;
                 assetMap.lowPriorityFiles.push(ssgManifestPath);
                 assets[ssgManifestPath] = new _webpack.sources.RawSource(srcEmptySsgManifest);
-                const srcEmptyMiddlewareManifest = `self.__MIDDLEWARE_MANIFEST=new Set;self.__MIDDLEWARE_MANIFEST_CB&&self.__MIDDLEWARE_MANIFEST_CB()`;
+                const srcEmptyMiddlewareManifest = `self.__MIDDLEWARE_MANIFEST=[];self.__MIDDLEWARE_MANIFEST_CB&&self.__MIDDLEWARE_MANIFEST_CB()`;
                 const middlewareManifestPath = `${_constants.CLIENT_STATIC_FILES_PATH}/${this.buildId}/_middlewareManifest.js`;
                 assetMap.lowPriorityFiles.push(middlewareManifestPath);
                 assets[middlewareManifestPath] = new _webpack.sources.RawSource(srcEmptyMiddlewareManifest);

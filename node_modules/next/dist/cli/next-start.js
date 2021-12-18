@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.nextStart = void 0;
 var _indexJs = _interopRequireDefault(require("next/dist/compiled/arg/index.js"));
-var _startServer = _interopRequireDefault(require("../server/lib/start-server"));
+var _startServer = require("../server/lib/start-server");
 var _utils = require("../server/lib/utils");
 var Log = _interopRequireWildcard(require("../build/output/log"));
 var _isError = _interopRequireDefault(require("../lib/is-error"));
@@ -85,11 +85,13 @@ const nextStart = (argv)=>{
     if (process.env.__NEXT_RAND_PORT) {
         port = 0;
     }
-    (0, _startServer).default({
-        dir
-    }, port, host).then(async ({ app , actualPort  })=>{
-        const appUrl = `http://${host === '0.0.0.0' ? 'localhost' : host}:${actualPort}`;
-        Log.ready(`started server on ${host}:${actualPort}, url: ${appUrl}`);
+    (0, _startServer).startServer({
+        dir,
+        hostname: host,
+        port
+    }).then(async (app)=>{
+        const appUrl = `http://${app.hostname}:${app.port}`;
+        Log.ready(`started server on ${host}:${app.port}, url: ${appUrl}`);
         await app.prepare();
     }).catch((err)=>{
         console.error(err);

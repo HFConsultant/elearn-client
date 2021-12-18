@@ -1,36 +1,31 @@
-import { ComponentType } from 'react';
-import { ClientBuildManifest } from '../build/webpack/plugins/build-manifest-plugin';
+import type { ComponentType } from 'react';
 declare global {
     interface Window {
-        __BUILD_MANIFEST?: ClientBuildManifest;
+        __BUILD_MANIFEST?: Record<string, string[]>;
         __BUILD_MANIFEST_CB?: Function;
-        __MIDDLEWARE_MANIFEST?: any;
+        __MIDDLEWARE_MANIFEST?: [location: string, isSSR: boolean][];
         __MIDDLEWARE_MANIFEST_CB?: Function;
     }
 }
-export interface LoadedEntrypointSuccess {
+interface LoadedEntrypointSuccess {
     component: ComponentType;
     exports: any;
 }
-export interface LoadedEntrypointFailure {
+interface LoadedEntrypointFailure {
     error: unknown;
 }
-export declare type RouteEntrypoint = LoadedEntrypointSuccess | LoadedEntrypointFailure;
-export interface RouteStyleSheet {
+declare type RouteEntrypoint = LoadedEntrypointSuccess | LoadedEntrypointFailure;
+interface RouteStyleSheet {
     href: string;
     content: string;
 }
-export interface LoadedRouteSuccess extends LoadedEntrypointSuccess {
+interface LoadedRouteSuccess extends LoadedEntrypointSuccess {
     styles: RouteStyleSheet[];
 }
-export interface LoadedRouteFailure {
+interface LoadedRouteFailure {
     error: unknown;
 }
-export declare type RouteLoaderEntry = LoadedRouteSuccess | LoadedRouteFailure;
-export declare type Future<V> = {
-    resolve: (entrypoint: V) => void;
-    future: Promise<V>;
-};
+declare type RouteLoaderEntry = LoadedRouteSuccess | LoadedRouteFailure;
 export interface RouteLoader {
     whenEntrypoint(route: string): Promise<RouteEntrypoint>;
     onEntrypoint(route: string, execute: () => unknown): void;
@@ -39,6 +34,7 @@ export interface RouteLoader {
 }
 export declare function markAssetError(err: Error): Error;
 export declare function isAssetError(err?: Error): boolean | undefined;
-export declare function getClientBuildManifest(): Promise<ClientBuildManifest>;
-export declare function getMiddlewareManifest(): Promise<any>;
+export declare function getClientBuildManifest(): Promise<Record<string, string[]>>;
+export declare function getMiddlewareManifest(): Promise<[location: string, isSSR: boolean][]>;
 export declare function createRouteLoader(assetPrefix: string): RouteLoader;
+export {};

@@ -39,7 +39,9 @@ async function recursiveCopy(source, dest, { concurrency =32 , overwrite =false 
         }
         if (isDirectory) {
             try {
-                await _fs.promises.mkdir(target);
+                await _fs.promises.mkdir(target, {
+                    recursive: true
+                });
             } catch (err) {
                 // do not throw `folder already exists` errors
                 if ((0, _isError).default(err) && err.code !== 'EEXIST') {

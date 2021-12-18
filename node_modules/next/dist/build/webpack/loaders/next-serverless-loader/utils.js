@@ -10,40 +10,18 @@ var _normalizeLocalePath = require("../../../../shared/lib/i18n/normalize-locale
 var _pathMatch = _interopRequireDefault(require("../../../../shared/lib/router/utils/path-match"));
 var _routeRegex = require("../../../../shared/lib/router/utils/route-regex");
 var _routeMatcher = require("../../../../shared/lib/router/utils/route-matcher");
-var _prepareDestination = _interopRequireWildcard(require("../../../../shared/lib/router/utils/prepare-destination"));
+var _prepareDestination = require("../../../../shared/lib/router/utils/prepare-destination");
 var _acceptHeader = require("../../../../server/accept-header");
 var _detectLocaleCookie = require("../../../../shared/lib/i18n/detect-locale-cookie");
 var _detectDomainLocale = require("../../../../shared/lib/i18n/detect-domain-locale");
 var _denormalizePagePath = require("../../../../server/denormalize-page-path");
 var _cookie = _interopRequireDefault(require("next/dist/compiled/cookie"));
 var _constants = require("../../../../shared/lib/constants");
+var _requestMeta = require("../../../../server/request-meta");
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
     };
-}
-function _interopRequireWildcard(obj) {
-    if (obj && obj.__esModule) {
-        return obj;
-    } else {
-        var newObj = {
-        };
-        if (obj != null) {
-            for(var key in obj){
-                if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                    var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {
-                    };
-                    if (desc.get || desc.set) {
-                        Object.defineProperty(newObj, key, desc);
-                    } else {
-                        newObj[key] = obj[key];
-                    }
-                }
-            }
-        }
-        newObj.default = obj;
-        return newObj;
-    }
 }
 const getCustomRouteMatcher = (0, _pathMatch).default(true);
 const vercelHeader = 'x-vercel-id';
@@ -70,7 +48,12 @@ function getUtils({ page , i18n , basePath , rewrites , pageIsDynamic  }) {
                 }
             }
             if (params) {
-                const { parsedDestination  } = (0, _prepareDestination).default(rewrite.destination, params, parsedUrl.query, true);
+                const { parsedDestination  } = (0, _prepareDestination).prepareDestination({
+                    appendParamsToQuery: true,
+                    destination: rewrite.destination,
+                    params: params,
+                    query: parsedUrl.query
+                });
                 Object.assign(parsedUrl.query, parsedDestination.query);
                 delete parsedDestination.query;
                 Object.assign(parsedUrl, parsedDestination);
@@ -264,7 +247,7 @@ function getUtils({ page , i18n , basePath , rewrites , pageIsDynamic  }) {
         if (detectedDomain) {
             defaultLocale = detectedDomain.defaultLocale;
             detectedLocale = defaultLocale;
-            req.__nextIsLocaleDomain = true;
+            (0, _requestMeta).addRequestMeta(req, '__nextIsLocaleDomain', true);
         }
         // if not domain specific locale use accept-language preferred
         detectedLocale = detectedLocale || acceptPreferredLocale;
@@ -277,7 +260,7 @@ function getUtils({ page , i18n , basePath , rewrites , pageIsDynamic  }) {
                 ...parsedUrl,
                 pathname: localePathResult.pathname
             });
-            req.__nextStrippedLocale = true;
+            (0, _requestMeta).addRequestMeta(req, '__nextStrippedLocale', true);
             parsedUrl.pathname = localePathResult.pathname;
         }
         // If a detected locale is a domain specific locale and we aren't already

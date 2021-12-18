@@ -44,14 +44,17 @@ class NextResponse extends Response {
     cookie(name, value, opts = {
     }) {
         const val = typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value);
-        if (opts.maxAge) {
-            opts.expires = new Date(Date.now() + opts.maxAge);
-            opts.maxAge /= 1000;
+        const options = {
+            ...opts
+        };
+        if (options.maxAge) {
+            options.expires = new Date(Date.now() + options.maxAge);
+            options.maxAge /= 1000;
         }
-        if (opts.path == null) {
-            opts.path = '/';
+        if (options.path == null) {
+            options.path = '/';
         }
-        this.headers.append('Set-Cookie', _cookie.default.serialize(name, String(val), opts));
+        this.headers.append('Set-Cookie', _cookie.default.serialize(name, String(val), options));
         return this;
     }
     clearCookie(name, opts = {
@@ -60,6 +63,13 @@ class NextResponse extends Response {
             expires: new Date(1),
             path: '/',
             ...opts
+        });
+    }
+    static json(body) {
+        return new NextResponse(JSON.stringify(body), {
+            headers: {
+                'content-type': 'application/json'
+            }
         });
     }
     static redirect(url, status = 302) {

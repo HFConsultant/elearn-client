@@ -14,30 +14,28 @@ function _interopRequireDefault(obj) {
 function RouteAnnouncer() {
     const { asPath  } = (0, _router).useRouter();
     const [routeAnnouncement, setRouteAnnouncement] = _react.default.useState('');
-    // Only announce the path change, but not for the first load because screen reader will do that automatically.
+    // Only announce the path change, but not for the first load because screen
+    // reader will do that automatically.
     const initialPathLoaded = _react.default.useRef(false);
-    // Every time the path changes, announce the route change. The announcement will be prioritized by h1, then title
-    // (from metadata), and finally if those don't exist, then the pathName that is in the URL. This methodology is
-    // inspired by Marcy Sutton's accessible client routing user testing. More information can be found here:
+    // Every time the path changes, announce the new page’s title following this
+    // priority: first the document title (from head), otherwise the first h1, or
+    // if none of these exist, then the pathname from the URL. This methodology is
+    // inspired by Marcy Sutton’s accessible client routing user testing. More
+    // information can be found here:
     // https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/
     _react.default.useEffect(()=>{
         if (!initialPathLoaded.current) {
             initialPathLoaded.current = true;
             return;
         }
-        let newRouteAnnouncement;
-        const pageHeader = document.querySelector('h1');
-        if (pageHeader) {
-            newRouteAnnouncement = pageHeader.innerText || pageHeader.textContent;
+        if (document.title) {
+            setRouteAnnouncement(document.title);
+        } else {
+            const pageHeader = document.querySelector('h1');
+            var ref;
+            const content = (ref = pageHeader === null || pageHeader === void 0 ? void 0 : pageHeader.innerText) !== null && ref !== void 0 ? ref : pageHeader === null || pageHeader === void 0 ? void 0 : pageHeader.textContent;
+            setRouteAnnouncement(content || asPath);
         }
-        if (!newRouteAnnouncement) {
-            if (document.title) {
-                newRouteAnnouncement = document.title;
-            } else {
-                newRouteAnnouncement = asPath;
-            }
-        }
-        setRouteAnnouncement(newRouteAnnouncement);
     }, // TODO: switch to pathname + query object of dynamic route requirements
     [
         asPath

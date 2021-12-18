@@ -35,6 +35,7 @@ function NoAnonymousDefaultExport({ types: t , ...babel }) {
                         {
                             warn([
                                 _chalk.default.yellow.bold('Anonymous arrow functions cause Fast Refresh to not preserve local component state.'),
+                                _chalk.default.cyan(this.file.opts.filename),
                                 'Please add a name to your function, for example:',
                                 '',
                                 _chalk.default.bold('Before'),
@@ -54,6 +55,7 @@ function NoAnonymousDefaultExport({ types: t , ...babel }) {
                             if (isAnonymous) {
                                 warn([
                                     _chalk.default.yellow.bold('Anonymous function declarations cause Fast Refresh to not preserve local component state.'),
+                                    _chalk.default.cyan(this.file.opts.filename),
                                     'Please add a name to your function, for example:',
                                     '',
                                     _chalk.default.bold('Before'),

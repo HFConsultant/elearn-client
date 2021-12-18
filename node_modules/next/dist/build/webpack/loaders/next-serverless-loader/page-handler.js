@@ -120,7 +120,11 @@ function getPageHandler(ctx) {
                 locales: i18n === null || i18n === void 0 ? void 0 : i18n.locales,
                 locale: detectedLocale,
                 defaultLocale,
-                domainLocales: i18n === null || i18n === void 0 ? void 0 : i18n.domains
+                domainLocales: i18n === null || i18n === void 0 ? void 0 : i18n.domains,
+                optimizeImages: process.env.__NEXT_OPTIMIZE_IMAGES,
+                optimizeCss: process.env.__NEXT_OPTIMIZE_CSS,
+                concurrentFeatures: process.env.__NEXT_CONCURRENT_FEATURES,
+                crossOrigin: process.env.__NEXT_CROSS_ORIGIN
             }, options);
             if (page === '/_error' && !res.statusCode) {
                 res.statusCode = 404;

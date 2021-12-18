@@ -37,6 +37,7 @@ class BaseRequest extends _body.Body {
             credentials: init.credentials || getProp(input, 'credentials') || 'same-origin',
             headers,
             method,
+            referrer: init.referrer || 'about:client',
             redirect: init.redirect || getProp(input, 'redirect') || 'follow',
             url: new _nextUrl.NextURL(typeof input === 'string' ? input : input.url)
         };
@@ -49,6 +50,9 @@ class BaseRequest extends _body.Body {
     }
     get method() {
         return this[INTERNALS].method;
+    }
+    get referrer() {
+        return this[INTERNALS].referrer;
     }
     get headers() {
         return this[INTERNALS].headers;
@@ -73,9 +77,6 @@ class BaseRequest extends _body.Body {
     }
     get destination() {
         return (0, _utils).notImplemented('Request', 'destination');
-    }
-    get referrer() {
-        return (0, _utils).notImplemented('Request', 'referrer');
     }
     get referrerPolicy() {
         return (0, _utils).notImplemented('Request', 'referrerPolicy');

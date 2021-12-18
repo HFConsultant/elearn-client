@@ -1,8 +1,6 @@
-import type { RequestData, FetchEventResult } from './types';
-import { NextFetchEvent } from './spec-extension/fetch-event';
-import { NextRequest } from './spec-extension/request';
+import type { NextMiddleware, RequestData, FetchEventResult } from './types';
 export declare function adapter(params: {
-    handler: (request: NextRequest, event: NextFetchEvent) => Promise<Response>;
+    handler: NextMiddleware;
     page: string;
     request: RequestData;
 }): Promise<FetchEventResult>;

@@ -1,6 +1,5 @@
-/// <reference types="ua-parser-js" />
 import type { I18NConfig } from '../../config-shared';
-import type { IResult } from 'next/dist/compiled/ua-parser-js';
+import type { RequestData } from '../types';
 import { NextURL } from '../next-url';
 export declare const INTERNALS: unique symbol;
 export declare class NextRequest extends Request {
@@ -8,11 +7,7 @@ export declare class NextRequest extends Request {
         cookieParser(): {
             [key: string]: string;
         };
-        geo: {
-            city?: string;
-            country?: string;
-            region?: string;
-        };
+        geo: RequestData['geo'];
         ip?: string;
         page?: {
             name?: string;
@@ -31,7 +26,9 @@ export declare class NextRequest extends Request {
         city?: string | undefined;
         country?: string | undefined;
         region?: string | undefined;
-    };
+        latitude?: string | undefined;
+        longitude?: string | undefined;
+    } | undefined;
     get ip(): string | undefined;
     get preflight(): string | null;
     get nextUrl(): NextURL;
@@ -63,7 +60,28 @@ export interface RequestInit extends globalThis.RequestInit {
         };
     };
 }
-interface UserAgent extends IResult {
+interface UserAgent {
     isBot: boolean;
+    ua: string;
+    browser: {
+        name?: string;
+        version?: string;
+    };
+    device: {
+        model?: string;
+        type?: string;
+        vendor?: string;
+    };
+    engine: {
+        name?: string;
+        version?: string;
+    };
+    os: {
+        name?: string;
+        version?: string;
+    };
+    cpu: {
+        architecture?: string;
+    };
 }
 export {};

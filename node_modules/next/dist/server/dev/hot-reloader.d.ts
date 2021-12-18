@@ -29,6 +29,7 @@ export default class HotReloader {
     private rewrites;
     private fallbackWatcher;
     private hotReloaderSpan;
+    private pagesMapping;
     constructor(dir: string, { config, pagesDir, buildId, previewProps, rewrites, }: {
         config: NextConfigComplete;
         pagesDir: string;

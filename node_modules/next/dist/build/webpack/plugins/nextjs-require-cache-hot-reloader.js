@@ -48,7 +48,7 @@ class NextJsRequireCacheHotReloader {
         compiler.hooks.assetEmitted.tap(PLUGIN_NAME, (_file, { targetPath , content  })=>{
             this.currentOutputPathsWebpack5.add(targetPath);
             deleteCache(targetPath);
-            (0, _sandbox).clearSandboxCache(targetPath, content.toString('utf-8'));
+            (0, _sandbox).clearModuleContext(targetPath, content.toString('utf-8'));
         });
         compiler.hooks.afterEmit.tap(PLUGIN_NAME, (compilation)=>{
             RUNTIME_NAMES.forEach((name)=>{

@@ -1,1 +1,1 @@
-export default function middlewareRSCLoader(this: any): Promise<string>;
+export default function middlewareSSRLoader(this: any): Promise<string>;

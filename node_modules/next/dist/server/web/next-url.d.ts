@@ -20,7 +20,7 @@ export declare class NextURL extends URL {
     private _locale?;
     private _options;
     private _url;
-    constructor(url: string, options?: Options);
+    constructor(input: string, options?: Options);
     get absolute(): boolean;
     analyzeUrl(): void;
     formatPathname(): string;
