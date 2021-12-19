@@ -1,4 +1,4 @@
-import { Buttons, Progress, Switch } from "antd";
+import { Button, Progress, Switch } from "antd";
 import { CloseCircleFilled, CloseCircleOutlined } from "@ant-design/icons";
 import ReactPlayer from "react-player";
 
@@ -13,14 +13,14 @@ const UpdateLessonForm = ({
 }) => {
   return (
     <div className="container pt-3">
-      {/* {JSON.stringify(current)} */}
+      {JSON.stringify(current)}
       <form onSubmit={handleUpdateLesson}>
         <input
           type="text"
           className="form-control square"
           onChange={(e) => setCurrent({ ...current, title: e.target.value })}
           value={current.title}
-          autofocus
+          autoFocus
           required
         />
         <textarea

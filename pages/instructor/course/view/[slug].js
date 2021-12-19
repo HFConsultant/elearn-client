@@ -53,7 +53,7 @@ const CourseView = () => {
     const { data } = await axios.post(`/api/instructor/student-count`, {
       courseId: course._id,
     });
-    //console.log("STUDENT COUNT => ", data);
+    console.log("STUDENT COUNT => ", data);
     setStudents(data.length);
   };
 
@@ -71,7 +71,7 @@ const CourseView = () => {
       setProgress(0);
       setUploadButtonText("Upload video");
       setVisible(false);
-      setCourse(data);
+      setCourse(data[0]);
       toast("Lesson added successfully");
     } catch (err) {
       console.log(err);
@@ -133,7 +133,7 @@ const CourseView = () => {
       let answer = window.confirm("Are you sure you want to publish?");
       if (!answer) return;
       const { data } = await axios.put(`/api/course/publish/${courseId}`);
-      setCourse(data);
+      setCourse(data[0]);
       toast("Congrats! Your course is now live.");
     } catch (err) {
       toast("Course was not published. Try again later.");
@@ -146,7 +146,7 @@ const CourseView = () => {
       );
       if (!answer) return;
       const { data } = await axios.put(`/api/course/unpublish/${courseId}`);
-      setCourse(data);
+      setCourse(data[0]);
       toast(
         "Your course is unpublished and no longer available on marketplace"
       );
@@ -193,7 +193,7 @@ const CourseView = () => {
                       />
                     </Tooltip>
 
-                    {course.lessons && course.lessons.length > 1 ? (
+                    {course.lessons && course.lessons.length < 1 ? (
                       <Tooltip title="Min of 1 lesson required to publish">
                         <QuestionOutlined className="h5 pointer text-danger" />
                       </Tooltip>

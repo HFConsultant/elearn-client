@@ -43,9 +43,10 @@ const CourseEdit = () => {
 
   const loadCourse = async () => {
     const { data } = await axios.get(`/api/course/${slug}`);
-    console.log("loadCourse 'edit' =>", data);
-    if (data) setValues(data);
-    if (data && data.image) setImage(data.image);
+
+    console.log("loadCourse 'edit' =>", data[0]);
+    if (data) setValues(data[0]);
+    if (data && data[0].image) setImage(data[0].image);
   };
 
   const handleChange = (e) => {
@@ -100,7 +101,7 @@ const CourseEdit = () => {
         image,
       });
       toast("Course updated!");
-      //router.push("/instructor");
+      router.push("/instructor");
     } catch (err) {
       toast(err.response.data);
     }
@@ -128,17 +129,16 @@ const CourseEdit = () => {
       image,
     });
     toast("Lessons re-arranged successfully");
-
-    const handleDelete = async (index) => {
-      const answer = window.confirm(`Are you sure you want to delete?`);
-      if (!answer) return;
-      let allLessons = values.lessons;
-      const removed = allLessons.splice(index, 1);
-      setValues({ ...values, lessons: [...allLessons] });
-      // send request to server
-      const { data } = await axios.put(`/api/course/${slug}/${removed[0]._id}`);
-      console.log("LESSON DELETED => ", data);
-    };
+  };
+  const handleDelete = async (index) => {
+    const answer = window.confirm(`Are you sure you want to delete?`);
+    if (!answer) return;
+    let allLessons = values.lessons;
+    const removed = allLessons.splice(index, 1);
+    setValues({ ...values, lessons: [...allLessons] });
+    // send request to server
+    const { data } = await axios.put(`/api/course/${slug}/${removed[0]._id}`);
+    console.log("LESSON DELETED => ", data);
   };
 
   /**
@@ -158,9 +158,11 @@ const CourseEdit = () => {
     const file = e.target.files[0];
     setUploadVideoButtonText(file.name);
     setUploading(true);
+    //send video as form data
     const videoData = new FormData();
     videoData.append("video", file);
     videoData.append("courseId", values._id);
+    // save progress bar and send to server->DB
     const { data } = await axios.post(
       `/api/course/upload-video/${values.instructor._id}`,
       videoData,
