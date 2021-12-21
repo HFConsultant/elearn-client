@@ -100,7 +100,7 @@ const SingleCourseJumbotron = ({
               onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
             >
               {user
-                ? enrolled?.status
+                ? enrolled.status
                   ? "Go to course"
                   : "Enroll"
                 : "Login to Enroll"}
