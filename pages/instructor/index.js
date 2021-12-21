@@ -28,10 +28,7 @@ const InstructorIndex = () => {
         courses.map((course) => (
           <React.Fragment key={course._id}>
             <div className="pt-2 media">
-              <Avatar
-                size={80}
-                src={course.image ? course.image.Location : "/course.png"}
-              />
+              <Avatar size={80} src={course.image?.Location || "/course.png"} />
 
               <div className="pl-2 media-body">
                 <div className="row">
@@ -48,9 +45,9 @@ const InstructorIndex = () => {
                       {course.lessons.length} Lessons
                     </p>
 
-                    {course.lessons.length < 5 ? (
+                    {course.lessons.length < 1 ? (
                       <p style={myStyle} className="text-warning">
-                        At least 5 lessons are required to publish a course
+                        At least one lesson is required to publish a course
                       </p>
                     ) : course.published ? (
                       <p style={myStyle} className="text-success">

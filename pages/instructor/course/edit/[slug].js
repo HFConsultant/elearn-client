@@ -45,8 +45,8 @@ const CourseEdit = () => {
     const { data } = await axios.get(`/api/course/${slug}`);
 
     console.log("loadCourse 'edit' =>", data[0]);
-    if (data) setValues(data[0]);
-    if (data && data[0].image) setImage(data[0].image);
+    if (data[0]) setValues(data[0]);
+    if (data[0] && data[0].image) setImage(data[0].image);
   };
 
   const handleChange = (e) => {
@@ -216,14 +216,14 @@ const CourseEdit = () => {
       <pre>{JSON.stringify(image, null, 4)}</pre> */}
 
       <hr />
-
+      <h1 className="p-4 text-center jumbotron">Update Lesson</h1>
       <div className="pb-5 row">
         <div className="col lesson-list">
-          <h4>{values && values.lessons && values.lessons.length} Lessons</h4>
+          <h4>{values?.lessons?.length} Lessons</h4>
           <List
             onDragOver={(e) => e.preventDefault()}
             itemLayout="horizontal"
-            dataSource={values && values.lessons}
+            dataSource={values?.lessons}
             renderItem={(item, index) => (
               <Item
                 draggable
@@ -249,13 +249,14 @@ const CourseEdit = () => {
         </div>
       </div>
 
-      <Modal
+      <div>
+        {/* <Modal></Modal>
         title="Update lesson"
         centered
         visible={visible}
         onCancel={() => setVisible(false)}
-        footer={null}
-      >
+        footer={null} */}
+
         <UpdateLessonForm
           current={current}
           setCurrent={setCurrent}
@@ -266,7 +267,7 @@ const CourseEdit = () => {
           uploading={uploading}
         />
         {/* <pre>{JSON.stringify(current, null, 4)}</pre> */}
-      </Modal>
+      </div>
     </InstructorRoute>
   );
 };

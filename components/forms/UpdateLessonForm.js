@@ -13,7 +13,7 @@ const UpdateLessonForm = ({
 }) => {
   return (
     <div className="container pt-3">
-      {JSON.stringify(current)}
+      {/* {JSON.stringify(current)} */}
       <form onSubmit={handleUpdateLesson}>
         <input
           type="text"
@@ -58,7 +58,7 @@ const UpdateLessonForm = ({
         )}
 
         <div className="d-flex justify-content-between">
-          <span className="pt-3 badge">Preview</span>
+          <span className="pt-3 badge">Free Preview</span>
           <Switch
             className="float-right mt-2"
             disabled={uploading}

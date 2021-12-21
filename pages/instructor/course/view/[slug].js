@@ -164,54 +164,50 @@ const CourseView = () => {
         {course && (
           <div className="pt-1 container-fluid">
             <div className="pt-2 media">
-              <Avatar
-                size={80}
-                src={course.image ? course.image.Location : "/course.png"}
-              />
+              <Avatar size={80} src={course.image?.Location || "/course.png"} />
               <div className="pl-2 media-body">
                 <div className="row">
                   <div className="col">
                     <h5 className="mt-2 text-primary">{course.name}</h5>
                     <p style={{ marginTop: "-10px" }}>
-                      {course.lessons && course.lessons.length} Lessons
+                      {course.lessons?.length} Lessons
                     </p>
                     <p style={{ marginTop: "-15px", fontSize: "10px" }}>
                       {course.category}
                     </p>
-                  </div>
-
-                  <div className="pt-4 d-flex">
-                    <Tooltip title={`${students} Enrolled`}>
-                      <UserSwitchOutlined className="mr-4 h5 pointer text-info" />
-                    </Tooltip>
-                    <Tooltip title="Edit">
-                      <EditOutlined
-                        onClick={() =>
-                          router.push(`/instructor/course/edit/${slug}`)
-                        }
-                        className="mr-4 h5 pointer text-warning"
-                      />
-                    </Tooltip>
-
-                    {course.lessons && course.lessons.length < 1 ? (
-                      <Tooltip title="Min of 1 lesson required to publish">
-                        <QuestionOutlined className="h5 pointer text-danger" />
+                    <div className=" col-2 pt-1">
+                      <Tooltip title={`${students} Enrolled`}>
+                        <UserSwitchOutlined className="mr-4 h5 pointer text-info" />
                       </Tooltip>
-                    ) : course.published ? (
-                      <Tooltip title="Unpublish">
-                        <CloseOutlined
-                          onClick={(e) => handleUnpublish(e, course._id)}
-                          className="h5 pointer text-danger"
+                      <Tooltip title="Edit">
+                        <EditOutlined
+                          onClick={() =>
+                            router.push(`/instructor/course/edit/${slug}`)
+                          }
+                          className="mr-4 h5 pointer text-warning"
                         />
                       </Tooltip>
-                    ) : (
-                      <Tooltip title="Publish">
-                        <CheckOutlined
-                          onClick={(e) => handlePublish(e, course._id)}
-                          className="h5 pointer text-success"
-                        />
-                      </Tooltip>
-                    )}
+
+                      {course.lessons && course.lessons.length < 1 ? (
+                        <Tooltip title="Min of 1 lesson required to publish">
+                          <QuestionOutlined className="h5 pointer text-danger" />
+                        </Tooltip>
+                      ) : course.published ? (
+                        <Tooltip title="Unpublish">
+                          <CloseOutlined
+                            onClick={(e) => handleUnpublish(e, course._id)}
+                            className="h5 pointer text-danger"
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Publish">
+                          <CheckOutlined
+                            onClick={(e) => handlePublish(e, course._id)}
+                            className="h5 pointer text-success"
+                          />
+                        </Tooltip>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

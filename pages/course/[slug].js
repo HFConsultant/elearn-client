@@ -39,9 +39,9 @@ const SingleCourse = ({ course }) => {
       if (!user) router.push("/login");
       if (enrolled.status)
         return router.push(`/user/course/${enrolled.course.slug}`);
-      const { data } = await axios.get(`/api/paid-enrollment/${course._id}`);
+      const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY, data);
-      stripe.redirectToCheckout({ sessionId: data });
+      stripe.redirectToCheckout({ sessionId: data[0] });
     } catch (err) {
       toast("Enrollment failed, please try again");
       console.log(err);
@@ -53,10 +53,10 @@ const SingleCourse = ({ course }) => {
     console.log("handleFreeEnrollment");
     e.preventDefault();
     try {
+      setLoading(true);
       if (!user) router.push("/login");
       if (enrolled.status)
         return router.push(`/user/course/${enrolled.course.slug}`);
-      setLoading(true);
       const { data } = await axios.post(`/api/free-enrollment/${course._id}`);
       toast(data.message);
       setLoading(false);
@@ -104,7 +104,7 @@ const SingleCourse = ({ course }) => {
 
 export async function getServerSideProps({ query }) {
   const { data } = await axios.get(`${process.env.API}/course/${query.slug}`);
-
+  console.log("getServerSideProps data =>", data);
   return {
     props: {
       course: data[0],

@@ -31,6 +31,7 @@ const SingleCourseJumbotron = ({
   } = course;
 
   console.log("COURSE =>", course);
+  console.log("LESSONS =>", lessons);
 
   return (
     <div className="jumbotron bg-primary square">
@@ -39,9 +40,7 @@ const SingleCourseJumbotron = ({
           {/* {title} */}
           <h1 className="text-light font-weight-bold">{name}</h1>
           {/* {description} */}
-          <p className="lead">
-            {description && description.substring(0, 160)}...
-          </p>
+          <p className="lead">{description?.substring(0, 160)}...</p>
           {/* {category} */}
           <Badge
             count={category}
@@ -64,7 +63,7 @@ const SingleCourseJumbotron = ({
         </div>
         <div className="col-md-4">
           {/* {image} */}
-          {lessons[0].video && lessons[0].video.Location ? (
+          {lessons[0].video?.Location ? (
             <div
               onClick={() => {
                 setPreview(lessons[0].video.Location);
@@ -101,7 +100,7 @@ const SingleCourseJumbotron = ({
               onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
             >
               {user
-                ? enrolled.status
+                ? enrolled?.status
                   ? "Go to course"
                   : "Enroll"
                 : "Login to Enroll"}
