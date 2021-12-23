@@ -42,7 +42,7 @@ const login = () => {
       window.localStorage.setItem("user", JSON.stringify(data));
       // redirect
       router.push("/");
-      toast(`Welcome!`);
+      toast(data ? `Welcome ${data.name.split(" ")[0]}!` : "Welcome!");
       setEmail("");
       setPassword("");
 

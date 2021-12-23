@@ -42,7 +42,13 @@ const Provider = ({ children }) => {
     function (error) {
       // status codes outside of 2xx trigger this
       let res = error.response;
-      if (res.status === 401 && res.config && !res.config.__isRetryRequest) {
+      console.log(res);
+      if (
+        res &&
+        res.status === 401 &&
+        res.config &&
+        !res.config.__isRetryRequest
+      ) {
         return new Promise((resolve, reject) => {
           axios
             .get("/api/logout")

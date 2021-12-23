@@ -39,7 +39,7 @@ const UserIndex = () => {
       )}
       {user && (
         <h1 className="p-4 text-center mp-4 jumbotron">
-          {user.name}'s Courses
+          {user.name.split(" ")[0]}'s Courses
         </h1>
       )}
       {/* {show list of courses} */}

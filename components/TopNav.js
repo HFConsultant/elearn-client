@@ -51,7 +51,7 @@ const TopNav = () => {
         icon={<AppstoreOutlined />}
       >
         <Link href="/">
-          <a>Home</a>
+          <a>All Courses</a>
         </Link>
       </Item>
 
@@ -118,7 +118,7 @@ const TopNav = () => {
         <SubMenu
           key="loggedIn"
           icon={<CoffeeOutlined />}
-          title={user && user.name}
+          title={user?.name.split(" ")[0] + "'s Portal"}
           className="float-right"
         >
           <ItemGroup>

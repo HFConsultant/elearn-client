@@ -89,6 +89,7 @@ const SingleCourse = () => {
           </Button>
           <Menu
             defaultSelectedKeys={[clicked]}
+            mode="inline"
             inlineCollapsed={collapsed}
             style={{ height: "80vh", overflow: "scroll" }}
           >
@@ -147,6 +148,7 @@ const SingleCourse = () => {
                     </div>
                   </>
                 )}
+              <div className="my-2"></div>
               <ReactMarkdown
                 source={course.lessons[clicked].content}
                 className="single-post"
